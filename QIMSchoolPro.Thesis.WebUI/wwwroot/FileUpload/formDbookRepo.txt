@@ -1,0 +1,634 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Logging;
+using Qface.Application.Shared.Common.Interfaces;
+using Qface.Domain.Shared.Enums;
+using QIMSchoolPro.Students.Domain.Entities;
+using QIMSchoolPro.Students.Domain.Entities.ExamResults;
+using QIMSchoolPro.Students.Domain.Enums;
+using QIMSchoolPro.Students.Domain.ValueObjects;
+using QIMSchoolPro.Students.Domain.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+namespace QIMSchoolPro.Students.Persistence.Repositories
+{
+	public class FormDBookRepository : Repository<FormDBook>, IFormDBookRepository
+	{
+		private readonly ISectionRoleAssignmentRepository _sectionRoleAssignmentRepository;
+
+		public ILogger<FormDBookRepository> Logger { get; }
+
+		public FormDBookRepository(StudentDbContext context, ILogger<FormDBookRepository> logger,
+			ISectionRoleAssignmentRepository sectionRoleAssignmentRepository,
+			IIdentityService identityService) :
+			base(context, identityService)
+		{
+			Logger = logger;
+			_sectionRoleAssignmentRepository = sectionRoleAssignmentRepository;
+		}
+
+		public IQueryable<FormDBook> GetStaffUnposteFromDs(int staffId, AcademicPeriod academicPeriod)
+		{
+            //var noramFormD =  GetCurrentStaffFormD(staffId, academicPeriod).Where(a => a.PostedById == null);
+            //var specialFormD = GetSpecialResitCurrentStaffFormD(staffId, academicPeriod).Where(a => a.PostedById == null);
+            //         var mergedQuery = noramFormD.Concat(specialFormD);
+            //         return mergedQuery;
+
+            var noramFormD = GetCurrentStaffFormD(staffId, academicPeriod).Where(a => a.PostedById == null).ToList();
+            var specialFormD = GetSpecialResitCurrentStaffFormD(staffId, academicPeriod).Where(a => a.PostedById == null).ToList();
+
+            var mergedList = noramFormD.Concat(specialFormD);
+
+            // Convert the merged list back to IQueryable if needed
+            var mergedQuery = mergedList.AsQueryable();
+
+            return mergedQuery;
+        }
+
+		public IQueryable<FormDBook> GetSectionHeadPosteFromDsAsync(int staffId, AcademicPeriod academicPeriod)
+		{
+			//var formDs = new List<FormDBook>();
+            //IQueryable<FormDBook> formDss = Enumerable.Empty<FormDBook>().AsQueryable();
+
+            IQueryable<SectionRoleAssignment> examOfficers = GetStaffExamRoleAssignment(staffId);
+
+            IQueryable<FormDBook> tempFormD = null;
+			
+			if (examOfficers.Any())
+			{
+				var NormalformDBooks = GetCurrentPostedStaffFormD(academicPeriod).Where(a => a.PostedById != null).ToList();
+
+				var SpecialformDBooks = GetSpecialResitCurrentPostedStaffFormD(academicPeriod).Where(a => a.PostedById != null).ToList();
+
+                var mergedList = NormalformDBooks.Concat(SpecialformDBooks);
+
+               var mergedQuery= mergedList.AsQueryable();
+
+                foreach (var examinationOfficer in examOfficers)
+				{
+
+
+					if (examinationOfficer.OfficerSectionId is null && examinationOfficer.Section == RoleSection.Main)
+					{
+						tempFormD = mergedQuery;
+
+					}
+					else
+					{
+						switch (examinationOfficer.Section)
+						{
+							case RoleSection.Department:
+								tempFormD = mergedQuery.Where(a => a.Course.Programme.Department.Id == examinationOfficer.OfficerSectionId);
+								break;
+
+							case RoleSection.Faculty:
+								tempFormD = mergedQuery.Where(a => a.Course.Programme.Department.Faculty.Id == examinationOfficer.OfficerSectionId);
+								break;
+
+							case RoleSection.SchoolCentre:
+								tempFormD = mergedQuery.Where(a => a.Course.Programme.Department.Faculty.SchoolCentre.Id == examinationOfficer.OfficerSectionId);
+								break;
+							case RoleSection.Campus:
+								tempFormD = mergedQuery.Where(a => a.Course.Programme.Department.Faculty.SchoolCentre.Campus.Id == examinationOfficer.OfficerSectionId);
+								break;
+						}
+					}
+
+					//tempFormD = MapFormDBookDto(tempFormD, examinationOfficer.Section);
+					//tempFormD = tempFormD.Union(MapFormDBookDto(tempFormD, examinationOfficer.Section));
+					//formDs.AddRange(MapFormDBookDto(tempFormD, examinationOfficer.Section));
+				}
+				
+			}
+			else
+			{
+				//IQueryable<FormDBook> formDBooks = GetCurrentStaffFormD(staffId, academicPeriod).Where(a => a.PostedById != null);
+                var NormalformDBooks = GetCurrentPostedStaffFormD(academicPeriod).Where(a => a.PostedById != null && a.StaffId==staffId).ToList();
+                var SpecialformDBooks = GetSpecialResitCurrentPostedStaffFormD(academicPeriod).Where(a => a.PostedById != null && a.StaffId == staffId).ToList();
+
+                var mergedList = NormalformDBooks.Concat(SpecialformDBooks);
+
+                var mergedQuery = mergedList.AsQueryable();
+                tempFormD = mergedQuery;
+               
+			}
+
+            return tempFormD;
+
+        }
+		public IQueryable<FormDBook> GetStaffPostedFromDs(int staffId, AcademicPeriod academicPeriod)
+		{
+			return GetCurrentStaffFormD(staffId, academicPeriod).Where(a => a.PostedById != null);
+
+		}
+		public async Task<IQueryable<FormDBook>> GetFromDsForValidationByExamOfficerAsync(int staffId, AcademicPeriod academicPeriod)
+		{
+			IQueryable<FormDBook> formDBooks = GetCurrentPostedStaffFormD(academicPeriod).Where(a => a.PostedById != null);
+
+			var examOfficers = await _sectionRoleAssignmentRepository.GetExamOficerAsync(staffId);
+			if (!examOfficers.Any()) return formDBooks.Take(0);
+			IQueryable<FormDBook> tempFormD = formDBooks;
+
+			foreach (var examinationOfficer in examOfficers)
+			{
+
+
+
+				if (examinationOfficer.OfficerSectionId is null && examinationOfficer.Section == RoleSection.Main)
+				{
+					tempFormD = formDBooks;
+				}
+				else
+				{
+					switch (examinationOfficer.Section)
+					{
+						case RoleSection.Department:
+							tempFormD = formDBooks.Where(a => a.Course.Programme.Department.Id == examinationOfficer.OfficerSectionId);
+							break;
+
+						case RoleSection.Faculty:
+							tempFormD = formDBooks.Where(a => a.Course.Programme.Department.Faculty.Id == examinationOfficer.OfficerSectionId);
+							break;
+
+						case RoleSection.SchoolCentre:
+							tempFormD = formDBooks.Where(a => a.Course.Programme.Department.Faculty.SchoolCentre.Id == examinationOfficer.OfficerSectionId);
+							break;
+						case RoleSection.Campus:
+							tempFormD = formDBooks.Where(a => a.Course.Programme.Department.Faculty.SchoolCentre.Campus.Id == examinationOfficer.OfficerSectionId);
+							break;
+					}
+				}
+
+			}
+			return tempFormD;
+
+		}
+
+		public async Task<List<FormDSheetModel>> GetFormDSheetById(long formDBookId, CancellationToken cancellationToken)
+		{
+
+			var formDSheets = await Context.FormDSheets
+							.Include(a => a.FormDBook)
+							.Include(a => a.StudentRegistration)
+							.Include(a => a.Student)
+							.ThenInclude(a => a.Party)
+							.Include(a => a.FormDBook)
+							.ThenInclude(a => a.Course)
+							.ThenInclude(a => a.Programme)
+							.ThenInclude(a => a.Certificate)
+							.Include(a => a.FormDBook)
+							.ThenInclude(a => a.Course)
+							.ThenInclude(a => a.Programme)
+							.ThenInclude(a => a.Department)
+							.ThenInclude(a => a.Faculty)
+							.ThenInclude(a => a.SchoolCentre)
+							.ThenInclude(a => a.Campus)
+							.Include(a => a.FormDBook)
+							.ThenInclude(a => a.Course)
+							.ThenInclude(a => a.FirstExaminerStaff)
+							.ThenInclude(a => a.Party)
+							.Where(a => a.FormDBookId == formDBookId)
+							.ToListAsync(cancellationToken);
+			var models = formDSheets
+				.Select(x => new FormDSheetModel
+				{
+					Id = x.Id,
+					IsPosted = x.FormDBook.IsPosted,
+					PostedDate = x.FormDBook.PostedDate,
+					IndexNumber = x.Student.IndexNumber,
+					StudentNumber = x.Student.StudentNumber,
+					Name = x.Student.Party.Name.FullNamev3,
+					ClassScore = x.Score?.ClassAssessment,
+					ExamScore = x.Score?.Exam,
+					TotalScore = x.Score?.Full,
+					SpecialCase = x.Score?.SpecialCase,
+					FirstExaminerStaff = x.FormDBook.Course.FirstExaminerStaff.Party.Name.FullNamev2,
+					AcademicYear = x.FormDBook.AcademicPeriod.AcademicYear,
+					SemesterId = (int)x.FormDBook.AcademicPeriod.Semester,
+					CourseCredit = x.FormDBook.Course.Credit,
+					CourseCode = x.FormDBook.Course.Code,
+					CourseName = x.FormDBook.Course.Name,
+					CertificateCode = x.FormDBook.Course.Programme.Certificate.Code,
+					DepartmentName = x.FormDBook.Course.Programme.Department.Name,
+					FacultyName = x.FormDBook.Course.Programme.Department.Faculty.Name,
+					RegistrationTypeId = x.StudentRegistration.RegistrationType,
+					YearGroup = x.Student.YearGroup.ClassYear,
+					Campus = x.FormDBook.Course.Programme.Department.Faculty.SchoolCentre.Campus.Name,
+					AdmittedYear = x.Student.YearGroup.AdmittedYear,
+					ClassYear = x.Student.YearGroup.ClassYear,
+
+				}).OrderByDescending(a => a.IndexNumber).ToList();
+
+			// foreach(var model in models)
+			//{
+			//	if (!string.IsNullOrEmpty(model.SpecialCase))
+			//	{
+			//		model.TotalScoreAnnex = model.SpecialCase;
+			//	}
+			//}
+
+			return models;
+		}
+
+
+
+        public async Task<List<FormDSheetModel>> GetFormDSheetByIdAnnex(long formDBookId, bool isResitCourse, CancellationToken cancellationToken)
+        {
+            var models = new List<FormDSheetModel>();
+			if (isResitCourse)
+			{
+                var formDSheets = await Context.FormDSheets
+                            .Include(a => a.FormDBook)
+                            .Include(a => a.StudentRegistration)
+                            .Include(a => a.Student)
+                            .ThenInclude(a => a.Party)
+                            .Include(a => a.FormDBook)
+                            .ThenInclude(a => a.Course)
+                            .ThenInclude(a => a.Programme)
+                            .ThenInclude(a => a.Certificate)
+                            .Include(a => a.FormDBook)
+                            .ThenInclude(a => a.Course)
+                            .ThenInclude(a => a.Programme)
+                            .ThenInclude(a => a.Department)
+                            .ThenInclude(a => a.Faculty)
+                            .ThenInclude(a => a.SchoolCentre)
+                            .ThenInclude(a => a.Campus)
+                            .Include(a => a.FormDBook)
+                            .ThenInclude(a => a.Course)
+                            .ThenInclude(a => a.FirstExaminerStaff)
+                            .ThenInclude(a => a.Party)
+                            .Where(a => a.FormDBookId == formDBookId && a.StudentRegistration.RegistrationType==RegistrationType.SpecialResist)
+                            .ToListAsync(cancellationToken);
+                 models = formDSheets
+                    .Select(x => new FormDSheetModel
+                    {
+                        Id = x.Id,
+                        IsPosted = x.FormDBook.IsPosted,
+                        PostedDate = x.FormDBook.PostedDate,
+                        IndexNumber = x.Student.IndexNumber,
+                        StudentNumber = x.Student.StudentNumber,
+                        Name = x.Student.Party.Name.FullNamev3,
+                        ClassScore = x.Score?.ClassAssessment,
+                        ExamScore = x.Score?.Exam,
+                        TotalScore = x.Score?.Full,
+                        SpecialCase = x.Score?.SpecialCase,
+                        FirstExaminerStaff = x.FormDBook.Course.FirstExaminerStaff.Party.Name.FullNamev2,
+                        AcademicYear = x.FormDBook.AcademicPeriod.AcademicYear,
+                        SemesterId = (int)x.FormDBook.AcademicPeriod.Semester,
+                        CourseCredit = x.FormDBook.Course.Credit,
+                        CourseCode = x.FormDBook.Course.Code,
+                        CourseName = x.FormDBook.Course.Name,
+                        CertificateCode = x.FormDBook.Course.Programme.Certificate.Code,
+                        DepartmentName = x.FormDBook.Course.Programme.Department.Name,
+                        FacultyName = x.FormDBook.Course.Programme.Department.Faculty.Name,
+                        RegistrationTypeId = x.StudentRegistration.RegistrationType,
+                        YearGroup = x.Student.YearGroup.ClassYear,
+                        Campus = x.FormDBook.Course.Programme.Department.Faculty.SchoolCentre.Campus.Name,
+                        AdmittedYear = x.Student.YearGroup.AdmittedYear,
+                        ClassYear = x.Student.YearGroup.ClassYear,
+
+                    }).OrderByDescending(a => a.IndexNumber).ToList();
+            }
+			else
+			{
+                var formDSheets = await Context.FormDSheets
+                            .Include(a => a.FormDBook)
+                            .Include(a => a.StudentRegistration)
+                            .Include(a => a.Student)
+                            .ThenInclude(a => a.Party)
+                            .Include(a => a.FormDBook)
+                            .ThenInclude(a => a.Course)
+                            .ThenInclude(a => a.Programme)
+                            .ThenInclude(a => a.Certificate)
+                            .Include(a => a.FormDBook)
+                            .ThenInclude(a => a.Course)
+                            .ThenInclude(a => a.Programme)
+                            .ThenInclude(a => a.Department)
+                            .ThenInclude(a => a.Faculty)
+                            .ThenInclude(a => a.SchoolCentre)
+                            .ThenInclude(a => a.Campus)
+                            .Include(a => a.FormDBook)
+                            .ThenInclude(a => a.Course)
+                            .ThenInclude(a => a.FirstExaminerStaff)
+                            .ThenInclude(a => a.Party)
+                            .Where(a => a.FormDBookId == formDBookId && a.StudentRegistration.RegistrationType==RegistrationType.Regular)
+                            .ToListAsync(cancellationToken);
+                 models = formDSheets
+                    .Select(x => new FormDSheetModel
+                    {
+                        Id = x.Id,
+                        IsPosted = x.FormDBook.IsPosted,
+                        PostedDate = x.FormDBook.PostedDate,
+                        IndexNumber = x.Student.IndexNumber,
+                        StudentNumber = x.Student.StudentNumber,
+                        Name = x.Student.Party.Name.FullNamev3,
+                        ClassScore = x.Score?.ClassAssessment,
+                        ExamScore = x.Score?.Exam,
+                        TotalScore = x.Score?.Full,
+                        SpecialCase = x.Score?.SpecialCase,
+                        FirstExaminerStaff = x.FormDBook.Course.FirstExaminerStaff.Party.Name.FullNamev2,
+                        AcademicYear = x.FormDBook.AcademicPeriod.AcademicYear,
+                        SemesterId = (int)x.FormDBook.AcademicPeriod.Semester,
+                        CourseCredit = x.FormDBook.Course.Credit,
+                        CourseCode = x.FormDBook.Course.Code,
+                        CourseName = x.FormDBook.Course.Name,
+                        CertificateCode = x.FormDBook.Course.Programme.Certificate.Code,
+                        DepartmentName = x.FormDBook.Course.Programme.Department.Name,
+                        FacultyName = x.FormDBook.Course.Programme.Department.Faculty.Name,
+                        RegistrationTypeId = x.StudentRegistration.RegistrationType,
+                        YearGroup = x.Student.YearGroup.ClassYear,
+                        Campus = x.FormDBook.Course.Programme.Department.Faculty.SchoolCentre.Campus.Name,
+                        AdmittedYear = x.Student.YearGroup.AdmittedYear,
+                        ClassYear = x.Student.YearGroup.ClassYear,
+
+                    }).OrderByDescending(a => a.IndexNumber).ToList();
+            }
+            
+
+            // foreach(var model in models)
+            //{
+            //	if (!string.IsNullOrEmpty(model.SpecialCase))
+            //	{
+            //		model.TotalScoreAnnex = model.SpecialCase;
+            //	}
+            //}
+
+            return models;
+        }
+
+
+
+
+        //public async Task<List<FormDSheetModelAnnex>> GetFormDSheetByIdAnnex(long formDBookId, CancellationToken cancellationToken)
+        //{
+        //	var formDSheets = await Context.FormDSheets
+        //					.Include(a => a.FormDBook)
+        //					.Include(a => a.StudentRegistration)
+        //					.Include(a => a.Student)
+        //					.ThenInclude(a => a.Party)
+        //					.Include(a => a.FormDBook)
+        //					.ThenInclude(a => a.Course)
+        //					.ThenInclude(a => a.Programme)
+        //					.ThenInclude(a => a.Certificate)
+        //					.Include(a => a.FormDBook)
+        //					.ThenInclude(a => a.Course)
+        //					.ThenInclude(a => a.Programme)
+        //					.ThenInclude(a => a.Department)
+        //					.ThenInclude(a => a.Faculty)
+        //					.ThenInclude(a => a.SchoolCentre)
+        //					.ThenInclude(a => a.Campus)
+        //					.Include(a => a.FormDBook)
+        //					.ThenInclude(a => a.Course)
+        //					.ThenInclude(a => a.FirstExaminerStaff)
+        //					.ThenInclude(a => a.Party)
+        //					.Where(a => a.FormDBookId == formDBookId)
+        //					.ToListAsync(cancellationToken);
+        //	var models = formDSheets
+        //		.Select(x => new FormDSheetModelAnnex
+        //		{
+        //			Id = x.Id,
+        //			IsPosted = x.FormDBook.IsPosted,
+        //			PostedDate = x.FormDBook.PostedDate,
+        //			IndexNumber = x.Student.IndexNumber,
+        //			StudentNumber = x.Student.StudentNumber,
+        //			Name = x.Student.Party.Name.FullNamev3,
+        //			ClassScore = x.Score?.ClassAssessment,
+        //			ExamScore = x.Score?.Exam,
+        //			TotalScore =  x.Score?.Full.ToString(),
+        //			SpecialCase = x.Score?.SpecialCase,
+        //			FirstExaminerStaff = x.FormDBook.Course.FirstExaminerStaff.Party.Name.FullNamev2,
+        //			AcademicYear = x.FormDBook.AcademicPeriod.AcademicYear,
+        //			SemesterId = (int)x.FormDBook.AcademicPeriod.Semester,
+        //			CourseCredit = x.FormDBook.Course.Credit,
+        //			CourseCode = x.FormDBook.Course.Code,
+        //			CourseName = x.FormDBook.Course.Name,
+        //			CertificateCode = x.FormDBook.Course.Programme.Certificate.Code,
+        //			DepartmentName = x.FormDBook.Course.Programme.Department.Name,
+        //			FacultyName = x.FormDBook.Course.Programme.Department.Faculty.Name,
+        //			RegistrationTypeId = x.StudentRegistration.RegistrationType,
+        //			YearGroup = x.Student.YearGroup.ClassYear,
+        //			Campus = x.FormDBook.Course.Programme.Department.Faculty.SchoolCentre.Campus.Name,
+        //			AdmittedYear = x.Student.YearGroup.AdmittedYear,
+        //			ClassYear = x.Student.YearGroup.ClassYear,
+
+        //		}).OrderByDescending(a => a.IndexNumber).ToList();
+
+        //          foreach (var model in models)
+        //          {
+        //              if (!string.IsNullOrEmpty(model.SpecialCase))
+        //              {
+        //                  switch (model.SpecialCase)
+        //                  {
+        //                      case "i":
+        //                          model.TotalScore = "i";
+        //                          break;
+
+        //                      case "I":
+        //                          model.TotalScore = "i";
+        //                          break;
+        //                  }
+
+        //                  model.SpecialCase = "";
+        //              }
+        //          }
+
+        //          return models;
+        //}
+        public async Task<List<FormDSheet>> GetFormDSheets(long formDBookId, CancellationToken cancellationToken)
+		{
+			var formDSheets = await Context.FormDSheets
+							.Include(a => a.Student)
+							.ThenInclude(a => a.Party)
+							.Include(a => a.FormDBook)
+							.ThenInclude(a => a.Course)
+							.Where(a => a.FormDBookId == formDBookId)
+							.ToListAsync(cancellationToken);
+			var models = formDSheets.OrderByDescending(a => a.Student.IndexNumber).ToList();
+			return models;
+		}
+
+
+
+
+
+
+		public override IQueryable<FormDBook> GetBaseQuery()
+		{
+			var query = Context.FormDBooks.Where(a => a.Audit.EntityStatus == EntityStatus.Normal).OrderByDescending(a => a.Audit.Created).Include(a => a.Staff)
+				.Include(a => a.Course).ThenInclude(a => a.Programme)
+				.ThenInclude(a => a.Department)
+				.ThenInclude(a => a.Faculty)
+				.ThenInclude(a => a.SchoolCentre)
+				.Include(a => a.Course).ThenInclude(a => a.StudentRegistrations);
+				//.Include(a => a.FormDSheets).ThenInclude(a => a.StudentRegistration);
+			return query;
+		}
+		public override Expression<Func<FormDBook, bool>> GetSearchCondition(string search)
+		{
+			return x =>
+			x.SaveName.Contains(search) ||
+			x.Course.Name.Contains(search) ||
+			x.Course.Code.Contains(search);
+		}
+		private IQueryable<FormDBook> GetCurrentStaffFormD(int staffId, AcademicPeriod academicPeriod)
+		{
+
+            var data = GetBaseQuery().Where(a =>
+                            a.AcademicPeriod.LowerYear == academicPeriod.LowerYear
+                && a.AcademicPeriod.UpperYear == academicPeriod.UpperYear && a.AcademicPeriod.Semester == academicPeriod.Semester && a.Audit.EntityStatus == EntityStatus.Normal
+                && a.StaffId == staffId
+                && a.Course.AcademicPeriod.UpperYear == academicPeriod.UpperYear && a.Course.AcademicPeriod.LowerYear == academicPeriod.LowerYear
+                && a.Course.AcademicPeriod.Semester == academicPeriod.Semester
+                );
+            return data;
+        }
+
+		public IQueryable<FormDBook> GetSpecialResitCurrentStaffFormD(int staffId, AcademicPeriod academicPeriod)
+		{
+            var data = GetBaseQuery().Where(a => a.AcademicPeriod.LowerYear == academicPeriod.LowerYear
+                    && a.AcademicPeriod.UpperYear == academicPeriod.UpperYear && a.AcademicPeriod.Semester == academicPeriod.Semester
+                    && a.Audit.EntityStatus == EntityStatus.Normal && a.StaffId== staffId
+
+                     && a.Course.StudentRegistrations.Where(a => a.AcademicPeriod.UpperYear == academicPeriod.UpperYear && a.AcademicPeriod.LowerYear == academicPeriod.LowerYear
+                     && a.AcademicPeriod.Semester == academicPeriod.Semester
+                && a.RegistrationType == RegistrationType.SpecialResist && a.RegistrationStatus == RegistrationStatus.Registered).Any());
+
+
+            foreach (var formDBook in data)
+            {
+                formDBook.TypeId = 3; 
+            }
+
+            return data;
+
+		}
+
+		public IQueryable<FormDBook> GetCurrentPostedStaffFormD(AcademicPeriod academicPeriod)
+		{
+			var data = GetBaseQuery().Where(a =>
+							a.AcademicPeriod.LowerYear == academicPeriod.LowerYear
+				&& a.AcademicPeriod.UpperYear == academicPeriod.UpperYear && a.AcademicPeriod.Semester == academicPeriod.Semester && a.Audit.EntityStatus == EntityStatus.Normal
+				&& a.Course.AcademicPeriod.UpperYear==academicPeriod.UpperYear && a.Course.AcademicPeriod.LowerYear==academicPeriod.LowerYear
+				&& a.Course.AcademicPeriod.Semester==academicPeriod.Semester 
+				);
+		return data;
+		}
+
+
+        public IQueryable<FormDBook> GetSpecialResitCurrentPostedStaffFormD(AcademicPeriod academicPeriod)
+		{
+	
+			var info = GetBaseQuery().Where(a => a.AcademicPeriod.LowerYear == academicPeriod.LowerYear
+					&& a.AcademicPeriod.UpperYear == academicPeriod.UpperYear && a.AcademicPeriod.Semester == academicPeriod.Semester
+					&& a.Audit.EntityStatus == EntityStatus.Normal
+
+                     && a.Course.StudentRegistrations.Where(a => a.AcademicPeriod.UpperYear == academicPeriod.UpperYear && a.AcademicPeriod.LowerYear == academicPeriod.LowerYear
+					 && a.AcademicPeriod.Semester==academicPeriod.Semester
+                && a.RegistrationType == RegistrationType.SpecialResist && a.RegistrationStatus==RegistrationStatus.Registered).Any());
+
+
+
+            foreach (var item in info)
+            {
+                item.TypeId = 3;
+				item.Course.Name = item.Course.Name + "(Special Resit)";
+            }
+
+            return info;
+
+        }
+
+
+        private IQueryable<FormDBook> MapFormDBookDto(IQueryable<FormDBook> courses, RoleSection section)
+		
+		{
+				foreach (var formDBook in courses)
+				{
+					formDBook.TypeId = (int)section;
+					formDBook.Type = (int)section;
+				}
+
+				return courses;
+
+
+		}
+		private IQueryable<SectionRoleAssignment> GetStaffExamRoleAssignment(int staffId)
+		{
+            return Context.SectionRoleAssignments.Where(a => a.StaffId == staffId &&
+									a.IsActive && a.Role == RoleType.ExamOfficer);
+			
+			
+			
+		}
+
+       
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using Qface.Persistence.EntityFramework.Extensions;
+using QIMSchoolPro.Students.Domain.Entities.ExamResults;
+using QIMSchoolPro.Students.Domain.ValueObjects;
+using QIMSchoolPro.Students.Domain.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace QIMSchoolPro.Students.Persistence.Repositories
+{
+	public interface IFormDBookRepository : IRepository<FormDBook>
+	{
+		Task<List<FormDSheet>> GetFormDSheets(long formDBookId, CancellationToken cancellationToken);
+		Task<List<FormDSheetModel>> GetFormDSheetById(long formDBookId, CancellationToken cancellationToken);
+		Task<List<FormDSheetModel>> GetFormDSheetByIdAnnex(long formDBookId, bool isResitCourse, CancellationToken cancellationToken);
+		Task<IQueryable<FormDBook>> GetFromDsForValidationByExamOfficerAsync(int staffId, AcademicPeriod academicPeriod);
+		IQueryable<FormDBook> GetSectionHeadPosteFromDsAsync(int staffId, AcademicPeriod academicPeriod);
+		IQueryable<FormDBook> GetStaffPostedFromDs(int staffId, AcademicPeriod academicPeriod);
+		IQueryable<FormDBook> GetStaffUnposteFromDs(int staffId, AcademicPeriod academicPeriod);
+		IQueryable<FormDBook> GetSpecialResitCurrentStaffFormD(int staffId, AcademicPeriod academicPeriod);
+		IQueryable<FormDBook> GetSpecialResitCurrentPostedStaffFormD(AcademicPeriod academicPeriod);
+		IQueryable<FormDBook> GetCurrentPostedStaffFormD(AcademicPeriod academicPeriod);
+
+
+
+    }
+}
+
+
+
+
+
+
+
+

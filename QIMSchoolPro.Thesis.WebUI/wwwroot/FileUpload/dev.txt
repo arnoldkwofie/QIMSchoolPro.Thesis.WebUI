@@ -1,0 +1,117 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "IdentityConfiguration": {
+    "IdentityServerBaseUrl": "https://portal.umat.edu.gh/auth",
+    //"IdentityServerBaseUrl": "https://localhost:44310",
+    "IdentityAdminRedirectUri": "https://localhost:5001/signin-oidc",
+    //"IdentityAdminRedirectUri": "https://portal.umat.edu.gh/admin/signin-oidc",
+    "IdentityRedirectLogoutUrl": "https://portal.umat.edu.gh/auth/Account/Logout",
+    "IdentityRedirectProfileUrl": "https://portal.umat.edu.gh/auth/Manage",
+    "IdentityRedirectChangePasswordUrl": "https://portal.umat.edu.gh/auth/Manage/ChangePassword",
+    "IdentityRedirectPersonalDataUrl": "https://portal.umat.edu.gh/auth/Manage/PersonalData",
+    "IdentityRedirectTwoFactorAuthenticationUrl": "https://portal.umat.edu.gh/auth/Manage/TwoFactorAuthentication",
+    "IdentityAdminCookieName": "QIMSchoolProAdminClient.WebUI",
+    "IdentityAdminCookieExpiresUtcHours": 12,
+    "RequireHttpsMetadata": true,
+    "TokenValidationClaimName": "name",
+    "TokenValidationClaimRole": "role",
+    "ClientId": "QIMSchoolProAdminClient.WebUI",
+    "ClientSecret": "e9b03483-c776-3f6c-8fc3-04ce5255291f",
+    "OidcResponseType": "code",
+    "Scopes": [
+      "openid",
+      "profile",
+      "email",
+      "roles"
+    ]
+  },
+  "ApplicationService": {
+    "AppName": "AdminPortal",
+    "Master": {
+     "BaseUrl": "https://sys.umat.edu.gh/dev/api/"
+    //"BaseUrl": "https://localhost:6001/api/"
+    }
+  },
+  "Serilog": {
+    "MinimumLevel": "Information",
+    "Override": {
+      "Microsoft.AspNetCore": "Warning"
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}"
+        }
+      },
+      //{
+      //  "Name": "MSSqlServer",
+      //  "Args": {
+      //    "connectionString": "Server=.;Database=QIMSchoolPro_Auth_Server_Dev;persist security info=False;user id=sa;password=@P@$$w0rd@;",
+      //    "tableName": "Log",
+      //    "columnOptionsSection": {
+      //      "addStandardColumns": [ "LogEvent" ],
+      //      "removeStandardColumns": [ "Properties" ]
+      //    }
+      //  }
+      //},
+      //{
+      //  "Name": "File",
+      //  "Args": {
+      //    "path": "Serilogs\\AppLogs.log"
+      //  }
+      //},
+      {
+        "Name": "Seq",
+        "Args": {
+          "serverUrl": "http://portal.umat.edu.gh:5341"
+        }
+      },
+      //{
+      //  "Name": "File",
+      //  "Args": {
+      //    "path": "Serilogs\\AppLogs.json",
+      //    "formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog"
+      //  }
+      //},
+      {
+        "Name": "Logger",
+        "Args": {
+          "configureLogger": {
+            "WriteTo": [
+              {
+                "Name": "File",
+                "Args": {
+                  "path": "Serilogs\\api.log",
+                  "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}"
+                }
+              }
+            ],
+            "Filter": [
+              {
+                "Name": "ByExcluding",
+                "Args": {
+                  "expression": "StartsWith(SourceContext, 'Microsoft.')"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "Enrich": [
+      "FromLogContext",
+      "WithMachineName",
+      "WithProcessId",
+      "WithThreadId"
+    ]
+  }
+
+
+}

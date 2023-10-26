@@ -1,0 +1,152 @@
+﻿
+<script>
+
+    $(document).ready(function () {
+        const fileInput = document.getElementById("primaryFile");
+    const outputDiv = document.getElementById("output");
+        fileInput.addEventListener("change", function () {
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+
+            //if (file.type === "application/pdf") {
+                const reader = new FileReader();
+
+                reader.onload = function (event) {
+                    
+
+                    const content = event.target.result;
+
+                    console.log(content)
+                    $('#output').text(content);
+
+                    outputDiv.textContent = content;
+                        
+                };
+                
+
+                reader.readAsText(file);
+            //} else {
+            //    outputDiv.textContent = "Unsupported file format. Please upload a PDF document.";
+            //}
+        } else {
+            outputDiv.textContent = "Please select a file to extract content from.";
+        }
+    });
+    });
+</script>
+
+
+
+
+
+<div class="content d-flex flex-column flex-column-fluid " id="kt_content">
+
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+
+        <div id="kt_content_container" class=" container-xxl ">
+
+            <div class="d-flex flex-column flex-lg-row">
+
+                <div class="flex-lg-row-fluid ms-lg-12 ms-xl-10">
+
+                    <!--begin::Card-->
+                    <div class="card">
+                        <form id="frmSubmission">
+                        <div class="card-header d-flex align-items-center justify-content-between py-3">
+                            <h2 class="card-title m-0">
+                                Thesis Submission
+                            </h2>
+
+                            <!--begin::Toggle-->
+                            <a href="#" class="btn btn-sm btn-icon btn-color-primary btn-light btn-active-light-primary d-lg-none" data-bs-toggle="tooltip" data-bs-dismiss="click" data-bs-placement="top" id="kt_inbox_aside_toggle" aria-label="Toggle inbox menu" data-bs-original-title="Toggle inbox menu" data-kt-initialized="1">
+                                <i class="ki-duotone ki-burger-menu-2 fs-3 m-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span></i>
+                            </a>
+                            <!--end::Toggle-->
+                        </div>
+
+                        <div class="card-body p-0">
+
+                            <div class="container">
+                                <br />
+                               
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Title</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                        <input type="text" name="title" id="title" class="form-control form-control-lg form-control-solid" placeholder="Thesis Title" value="">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Thesis File</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                            <input type="file" id="primaryFile" class="form-control form-control-lg form-control-solid">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+
+
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Secondary File</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                            <input type="file" id="secondaryFile" class="form-control form-control-lg form-control-solid">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+
+
+
+
+                                <div id="kt_inbox_form_editor" class="bg-transparent border-0 h-350px px-3 ql-container ql-snow">
+                                    <div class="ql-editor ql-blank" id="output" data-gramm="false" contenteditable="true" data-placeholder=""><p><br></p></div>
+                                    <div class="ql-clipboard" contenteditable="true" tabindex="-1"></div><div class="ql-tooltip ql-hidden">
+                                        <a class="ql-preview" rel="noopener noreferrer" target="_blank" href="about:blank"></a>
+                                        <input type="text"  data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL"><a class="ql-action"></a>
+                                        <a class="ql-remove"></a>
+                                    </div>
+                                </div>
+                                <!--end::Message-->
+
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                        <!--begin::Footer-->
+                        <div class="d-flex flex-stack flex-wrap gap-2 py-5 ps-8 pe-5 border-top">
+                            <!--begin::Actions-->
+                            <div class="d-flex align-items-center me-3">
+                                <!--begin::Send-->
+                                <div class="btn-group me-4">
+                                        <input type="submit"  class="btn btn-primary fs-bold px-6" value=" submit" />
+                                </div>
+
+                            </div>
+                            <!--end::Actions-->
+
+                        </div>
+                        <!--end::Footer-->
+                        </form>
+                    </div>
+                    <!--end::Card-->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/app/submission/addsubmission.js"></script>
