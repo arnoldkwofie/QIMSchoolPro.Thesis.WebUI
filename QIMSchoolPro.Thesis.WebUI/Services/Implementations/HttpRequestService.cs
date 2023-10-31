@@ -45,5 +45,29 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
                 return RequestResponse.Error(ex);
             }
         }
+
+
+        public async Task<T> GetRequestAsync<T>(string path, CancellationToken cancellationToken)
+        {
+            var client = new RestClient();
+            var request = new RestRequest(path, Method.Get);
+            //var claims = await GetClaimsAsync();
+            //request.AddHeader("Authorization", "Bearer " + claims.Token);
+            var response = await client.ExecuteAsync<T>(request, cancellationToken);
+
+            if (response.IsSuccessful)
+            {
+                return response.Data;
+            }
+
+            var error = response.ErrorMessage;
+
+            if (string.IsNullOrEmpty(error))
+                error = response.Content.ToString();
+
+
+            throw new Exception(error);
+
+        }
     }
 }

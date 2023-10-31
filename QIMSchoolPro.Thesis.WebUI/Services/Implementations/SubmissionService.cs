@@ -1,5 +1,6 @@
 ﻿using QIMSchoolPro.Thesis.WebUI.Models.CommandModels;
 using QIMSchoolPro.Thesis.WebUI.Models.ServiceModels;
+using QIMSchoolPro.Thesis.WebUI.Models.ViewModels;
 using QIMSchoolPro.Thesis.WebUI.Services.Interfaces;
 using RestSharp;
 using System.Net;
@@ -20,10 +21,10 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
         //public async Task<RequestResponse> Create(SubmissionCommand payload)
         //{
         //    return await _httpAccessorService
-        //        .PostRequestAsync(HttpUrlConstant.Create(_baseRoute),  payload ,
+        //        .PostRequestAsync(HttpUrlConstant.Create(_baseRoute), payload,
         //        new CancellationToken());
-        //}  
-        
+        //}
+
         public async Task<RequestResponse> Create(SubmissionCommand payload)
         {
             var client = new RestClient(_baseRoute);
@@ -57,6 +58,23 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
                     return RequestResponse.Error(response.ErrorMessage, response.Content);
                 }
             }
+        }
+
+
+        public async Task<List<SubmissionViewModel>> GetsAsync()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.Gets(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<SubmissionViewModel> GetAsync(int id)
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<SubmissionViewModel>(HttpUrlConstant.Get(_baseRoute, id),
+                new CancellationToken());
+            return model;
         }
     }
 }

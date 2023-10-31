@@ -77,7 +77,7 @@ function PostMarksFilehandler(route, primaryFileId, secondaryFileId) {
                                     text: "Saved Successfully",
                                     type: "success"
                                 }).then(function () {
-                                    window.location = $('#base_url').text() + "/ManageMark/UnpostedResult";
+                                    window.location ="https://localhost:7223/Submission/MySubmissions";
                                 });
 
                             }

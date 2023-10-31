@@ -54,5 +54,24 @@ namespace QIMSchoolPro.Thesis.WebUI.Controllers
             }
             
         }
+
+    
+
+        public async Task<IActionResult> MySubmissions( ) 
+        {
+            var data = await _submissionService.GetsAsync();
+            return View(data);
+        }
+
+        public async Task<IActionResult> SubmissionDetail(int id)
+        {
+            var data = await _submissionService.GetAsync(id);
+            return View(data);
+        }
+
+        public async Task<IActionResult> test()
+        {
+            return View();
+        }
     }
 }

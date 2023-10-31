@@ -1,0 +1,700 @@
+﻿@model QIMSchoolPro.Thesis.WebUI.Models.ViewModels.SubmissionViewModel
+
+
+<div class="row gy-5 g-xl-10" data-select2-id="select2-data-130-g6i1">
+    <!--begin::Col-->
+
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xl-8" data-select2-id="select2-data-129-ziov">
+
+        <!--begin::Table Widget 5-->
+        <div class="card card-flush" data-select2-id="select2-data-128-9pq9">
+            <!--begin::Card header-->
+            <div class="card-header pt-7">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Submission #@Model.Id</span>
+                    <span class="text-gray-500 mt-1 fw-semibold fs-6">@Model.Title</span>
+                </h3>
+                <!--end::Title-->
+                <!--begin::Actions-->
+                <!--end::Actions-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body">
+                <span class="card-label fw-bold text-gray-900">Abstract</span>
+                <div id="kt_inbox_form_editor" class="bg-transparent border-0 h-350px px-3 ql-container ql-snow">
+                    <div class="ql-editor ql-blank" id="output" data-gramm="false" contenteditable="true" data-placeholder="">
+                        <p>
+                            <br>
+
+                            @Model.Abstract
+
+
+                        </p>
+                    </div>
+                    <div class="ql-clipboard" contenteditable="true" tabindex="-1"></div><div class="ql-tooltip ql-hidden">
+                        <a class="ql-preview" rel="noopener noreferrer" target="_blank" href="about:blank"></a>
+                        <input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL"><a class="ql-action"></a>
+                        <a class="ql-remove"></a>
+                    </div>
+                </div>
+
+
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Table Widget 5-->
+       
+    </div>
+    <!--end::Col-->
+
+    <div class="col-xl-4">
+
+        <!--begin::List widget 5-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-7">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Document Control & Versioning</span>
+                </h3>
+              
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <!--begin::Scroll-->
+                <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
+
+
+
+
+                    <div class="tree well">
+                        <ul>
+                            <li>
+                                <span><i class="icon-folder-open"></i> Parent</span> <a href="">Goes somewhere</a>
+                                <ul>
+                                    <li>
+                                        <span><i class="icon-minus-sign"></i> Child</span> <a href="">Goes somewhere</a>
+                                        <ul>
+                                            <li>
+                                                <span><i class="icon-leaf"></i> Grand Child</span> <a href="">Goes somewhere</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span><i class="icon-minus-sign"></i> Child</span> <a href="">Goes somewhere</a>
+                                        <ul>
+                                            <li>
+                                                <span><i class="icon-leaf"></i> Grand Child</span> <a href="">Goes somewhere</a>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-minus-sign"></i> Grand Child</span> <a href="">Goes somewhere</a>
+                                                <ul>
+                                                    <li>
+                                                        <span><i class="icon-minus-sign"></i> Great Grand Child</span> <a href="">Goes somewhere</a>
+                                                        <ul>
+                                                            <li>
+                                                                <span><i class="icon-leaf"></i> Great great Grand Child</span> <a href="">Goes somewhere</a>
+                                                            </li>
+                                                            <li>
+                                                                <span><i class="icon-leaf"></i> Great great Grand Child</span> <a href="">Goes somewhere</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <span><i class="icon-leaf"></i> Great Grand Child</span> <a href="">Goes somewhere</a>
+                                                    </li>
+                                                    <li>
+                                                        <span><i class="icon-leaf"></i> Great Grand Child</span> <a href="">Goes somewhere</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-leaf"></i> Grand Child</span> <a href="">Goes somewhere</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span><i class="icon-folder-open"></i> Parent2</span> <a href="">Goes somewhere</a>
+                                <ul>
+                                    <li>
+                                        <span><i class="icon-leaf"></i> Child</span> <a href="">Goes somewhere</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tree">
+                        <ul>
+                            <li>
+                                <span><i class="icon-calendar"></i> 2013, Week 2</span>
+                                <ul>
+                                    <li>
+                                        <span class="badge badge-success"><i class="icon-minus-sign"></i> Monday, January 7: 8.00 hours</span>
+                                        <ul>
+                                            <li>
+                                                <a href=""><span><i class="icon-time"></i> 8.00</span> &ndash; Changed CSS to accomodate...</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="badge badge-success"><i class="icon-minus-sign"></i> Tuesday, January 8: 8.00 hours</span>
+                                        <ul>
+                                            <li>
+                                                <span><i class="icon-time"></i> 6.00</span> &ndash; <a href="">Altered code...</a>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-time"></i> 2.00</span> &ndash; <a href="">Simplified our approach to...</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="badge badge-warning"><i class="icon-minus-sign"></i> Wednesday, January 9: 6.00 hours</span>
+                                        <ul>
+                                            <li>
+                                                <a href=""><span><i class="icon-time"></i> 3.00</span> &ndash; Fixed bug caused by...</a>
+                                            </li>
+                                            <li>
+                                                <a href=""><span><i class="icon-time"></i> 3.00</span> &ndash; Comitting latest code to Git...</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="badge badge-important"><i class="icon-minus-sign"></i> Wednesday, January 9: 4.00 hours</span>
+                                        <ul>
+                                            <li>
+                                                <a href=""><span><i class="icon-time"></i> 2.00</span> &ndash; Create component that...</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span><i class="icon-calendar"></i> 2013, Week 3</span>
+                                <ul>
+                                    <li>
+                                        <span class="badge badge-success"><i class="icon-minus-sign"></i> Monday, January 14: 8.00 hours</span>
+                                        <ul>
+                                            <li>
+                                                <span><i class="icon-time"></i> 7.75</span> &ndash; <a href="">Writing documentation...</a>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-time"></i> 0.25</span> &ndash; <a href="">Reverting code back to...</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <style>
+                        .tree {
+                            min-height: 20px;
+                            padding: 19px;
+                            margin-bottom: 20px;
+                            background-color: #fbfbfb;
+                            border: 1px solid #999;
+                            -webkit-border-radius: 4px;
+                            -moz-border-radius: 4px;
+                            border-radius: 4px;
+                            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+                            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+                            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05)
+                        }
+
+                            .tree li {
+                                list-style-type: none;
+                                margin: 0;
+                                padding: 10px 5px 0 5px;
+                                position: relative
+                            }
+
+                                .tree li::before,
+                                .tree li::after {
+                                    content: '';
+                                    left: -20px;
+                                    position: absolute;
+                                    right: auto
+                                }
+
+                                .tree li::before {
+                                    border-left: 1px solid #999;
+                                    bottom: 50px;
+                                    height: 100%;
+                                    top: 0;
+                                }
+
+                                .tree li::after {
+                                    box-sizing: border-box;
+                                    border-left: 1px solid #999;
+                                    border-bottom: 1px solid #999;
+                                    border-bottom-left-radius: 10px;
+                                    height: 25px;
+                                    top: 0px;
+                                    width: 25px;
+                                }
+
+                                .tree li span {
+                                    -moz-border-radius: 5px;
+                                    -webkit-border-radius: 5px;
+                                    border: 1px solid #999;
+                                    border-radius: 5px;
+                                    display: inline-block;
+                                    padding: 3px 8px;
+                                    text-decoration: none;
+                                }
+
+                                .tree li.parent_li > span {
+                                    cursor: pointer;
+                                }
+
+                            .tree > ul > li::before,
+                            .tree > ul > li::after {
+                                border: 0;
+                            }
+
+                            .tree li:last-child::before {
+                                height: 14px;
+                            }
+
+                            .tree li:not(.parent_li) span {
+                                position: relative;
+                            }
+
+                            .tree li span:before {
+                                content: "";
+                                position: absolute;
+                                /* border-width - 1px */
+                                left: -4px;
+                                bottom: calc(50% - 4px);
+                                border-color: transparent;
+                                border-left-color: #999;
+                                border-style: inherit;
+                                border-width: 4px;
+                            }
+
+                            /* another styles for parent_li immediate span children */
+                            .tree li.parent_li > span:before {
+                                bottom: initial;
+                                left: 2px;
+                                top: 20.5px;
+                            }
+
+                            /* hide arrow for immediate children */
+                            .tree > ul > li > span:before {
+                                display: none;
+                            }
+
+                            .tree li.parent_li > span:hover,
+                            .tree li.parent_li > span:hover + ul li span {
+                                background: #eee;
+                                border: 1px solid #94a0b4;
+                                color: #000;
+                            }
+                    </style>
+
+                    <script>
+                        $(function () {
+                            $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+                            $('.tree li.parent_li > span').on('click', function (e) {
+                                var children = $(this).parent('li.parent_li').find(' > ul > li');
+                                if (children.is(":visible")) {
+                                    children.hide('fast');
+                                    $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+                                } else {
+                                    children.show('fast');
+                                    $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+                                }
+                                e.stopPropagation();
+                            });
+                        });
+                    </script>
+                  
+
+                </div>
+
+
+
+                <hr />
+                <br />
+
+
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Submission History</span>
+                </h3>
+                <!--begin::Scroll-->
+                <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
+
+
+                                <!--begin::Wrapper-->
+                                <div class="d-flex align-items-center mb-6">
+                                    <!--begin::Bullet-->
+                                    <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-success"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1 me-5">
+                                        <!--begin::Time-->
+                                        <div class="text-gray-800 fw-semibold fs-2">
+                                            10:20 - 11:00
+                                            <span class="text-gray-500 fw-semibold fs-7">
+                                                AM
+                                            </span>
+                                        </div>
+                                        <!--end::Time-->
+                                        <!--begin::Description-->
+                                        <div class="text-gray-700 fw-semibold fs-6">
+                                            9 Degree Project Estimation Meeting
+                                        </div>
+                                        <!--end::Description-->
+                                        <!--begin::Link-->
+                                        <div class="text-gray-500 fw-semibold fs-7">
+                                            Lead by
+                                            <!--begin::Name-->
+                                            <a href="#" class="text-primary opacity-75-hover fw-semibold">Peter Marcus</a>
+                                            <!--end::Name-->
+                                        </div>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Info-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                                    <!--end::Action-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Wrapper-->
+                                <div class="d-flex align-items-center mb-6">
+                                    <!--begin::Bullet-->
+                                    <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-warning"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1 me-5">
+                                        <!--begin::Time-->
+                                        <div class="text-gray-800 fw-semibold fs-2">
+                                            12:00 - 13:40
+                                            <span class="text-gray-500 fw-semibold fs-7">
+                                                AM
+                                            </span>
+                                        </div>
+                                        <!--end::Time-->
+                                        <!--begin::Description-->
+                                        <div class="text-gray-700 fw-semibold fs-6">
+                                            Dashboard UI/UX Design Review
+                                        </div>
+                                        <!--end::Description-->
+                                        <!--begin::Link-->
+                                        <div class="text-gray-500 fw-semibold fs-7">
+                                            Lead by
+                                            <!--begin::Name-->
+                                            <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Bob</a>
+                                            <!--end::Name-->
+                                        </div>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Info-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                                    <!--end::Action-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Wrapper-->
+                                <div class="d-flex align-items-center mb-6">
+                                    <!--begin::Bullet-->
+                                    <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1 me-5">
+                                        <!--begin::Time-->
+                                        <div class="text-gray-800 fw-semibold fs-2">
+                                            16:30 - 17:00
+                                            <span class="text-gray-500 fw-semibold fs-7">
+                                                PM
+                                            </span>
+                                        </div>
+                                        <!--end::Time-->
+                                        <!--begin::Description-->
+                                        <div class="text-gray-700 fw-semibold fs-6">
+                                            Marketing Campaign Discussion
+                                        </div>
+                                        <!--end::Description-->
+                                        <!--begin::Link-->
+                                        <div class="text-gray-500 fw-semibold fs-7">
+                                            Lead by
+                                            <!--begin::Name-->
+                                            <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Mark Morris</a>
+                                            <!--end::Name-->
+                                        </div>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Info-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                                    <!--end::Action-->
+                                </div>
+                                <!--end::Wrapper-->
+
+                        <div class="d-flex align-items-center mb-6">
+                            <!--begin::Bullet-->
+                            <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+                            <!--end::Bullet-->
+                            <!--begin::Info-->
+                            <div class="flex-grow-1 me-5">
+                                <!--begin::Time-->
+                                <div class="text-gray-800 fw-semibold fs-2">
+                                    16:30 - 17:00
+                                    <span class="text-gray-500 fw-semibold fs-7">
+                                        PM
+                                    </span>
+                                </div>
+                                <!--end::Time-->
+                                <!--begin::Description-->
+                                <div class="text-gray-700 fw-semibold fs-6">
+                                    Marketing Campaign Discussion
+                                </div>
+                                <!--end::Description-->
+                                <!--begin::Link-->
+                                <div class="text-gray-500 fw-semibold fs-7">
+                                    Lead by
+                                    <!--begin::Name-->
+                                    <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Mark Morris</a>
+                                    <!--end::Name-->
+                                </div>
+                                <!--end::Link-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Action-->
+                            <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                            <!--end::Action-->
+                        </div>
+
+                          <div class="d-flex align-items-center mb-6">
+                                    <!--begin::Bullet-->
+                                    <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1 me-5">
+                                        <!--begin::Time-->
+                                        <div class="text-gray-800 fw-semibold fs-2">
+                                            16:30 - 17:00
+                                            <span class="text-gray-500 fw-semibold fs-7">
+                                                PM
+                                            </span>
+                                        </div>
+                                        <!--end::Time-->
+                                        <!--begin::Description-->
+                                        <div class="text-gray-700 fw-semibold fs-6">
+                                            Marketing Campaign Discussion
+                                        </div>
+                                        <!--end::Description-->
+                                        <!--begin::Link-->
+                                        <div class="text-gray-500 fw-semibold fs-7">
+                                            Lead by
+                                            <!--begin::Name-->
+                                            <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Mark Morris</a>
+                                            <!--end::Name-->
+                                        </div>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Info-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                                    <!--end::Action-->
+                                </div>
+
+                                  <div class="d-flex align-items-center mb-6">
+                                    <!--begin::Bullet-->
+                                    <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1 me-5">
+                                        <!--begin::Time-->
+                                        <div class="text-gray-800 fw-semibold fs-2">
+                                            16:30 - 17:00
+                                            <span class="text-gray-500 fw-semibold fs-7">
+                                                PM
+                                            </span>
+                                        </div>
+                                        <!--end::Time-->
+                                        <!--begin::Description-->
+                                        <div class="text-gray-700 fw-semibold fs-6">
+                                            Marketing Campaign Discussion
+                                        </div>
+                                        <!--end::Description-->
+                                        <!--begin::Link-->
+                                        <div class="text-gray-500 fw-semibold fs-7">
+                                            Lead by
+                                            <!--begin::Name-->
+                                            <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Mark Morris</a>
+                                            <!--end::Name-->
+                                        </div>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Info-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                                    <!--end::Action-->
+                                </div>
+
+                                  <div class="d-flex align-items-center mb-6">
+                                    <!--begin::Bullet-->
+                                    <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1 me-5">
+                                        <!--begin::Time-->
+                                        <div class="text-gray-800 fw-semibold fs-2">
+                                            16:30 - 17:00
+                                            <span class="text-gray-500 fw-semibold fs-7">
+                                                PM
+                                            </span>
+                                        </div>
+                                        <!--end::Time-->
+                                        <!--begin::Description-->
+                                        <div class="text-gray-700 fw-semibold fs-6">
+                                            Marketing Campaign Discussion
+                                        </div>
+                                        <!--end::Description-->
+                                        <!--begin::Link-->
+                                        <div class="text-gray-500 fw-semibold fs-7">
+                                            Lead by
+                                            <!--begin::Name-->
+                                            <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Mark Morris</a>
+                                            <!--end::Name-->
+                                        </div>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Info-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                                    <!--end::Action-->
+                                </div>
+
+                                  <div class="d-flex align-items-center mb-6">
+                                    <!--begin::Bullet-->
+                                    <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1 me-5">
+                                        <!--begin::Time-->
+                                        <div class="text-gray-800 fw-semibold fs-2">
+                                            16:30 - 17:00
+                                            <span class="text-gray-500 fw-semibold fs-7">
+                                                PM
+                                            </span>
+                                        </div>
+                                        <!--end::Time-->
+                                        <!--begin::Description-->
+                                        <div class="text-gray-700 fw-semibold fs-6">
+                                            Marketing Campaign Discussion
+                                        </div>
+                                        <!--end::Description-->
+                                        <!--begin::Link-->
+                                        <div class="text-gray-500 fw-semibold fs-7">
+                                            Lead by
+                                            <!--begin::Name-->
+                                            <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Mark Morris</a>
+                                            <!--end::Name-->
+                                        </div>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Info-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                                    <!--end::Action-->
+                                </div>
+
+                                  <div class="d-flex align-items-center mb-6">
+                                    <!--begin::Bullet-->
+                                    <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1 me-5">
+                                        <!--begin::Time-->
+                                        <div class="text-gray-800 fw-semibold fs-2">
+                                            16:30 - 17:00
+                                            <span class="text-gray-500 fw-semibold fs-7">
+                                                PM
+                                            </span>
+                                        </div>
+                                        <!--end::Time-->
+                                        <!--begin::Description-->
+                                        <div class="text-gray-700 fw-semibold fs-6">
+                                            Marketing Campaign Discussion
+                                        </div>
+                                        <!--end::Description-->
+                                        <!--begin::Link-->
+                                        <div class="text-gray-500 fw-semibold fs-7">
+                                            Lead by
+                                            <!--begin::Name-->
+                                            <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Mark Morris</a>
+                                            <!--end::Name-->
+                                        </div>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Info-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                                    <!--end::Action-->
+                                </div>
+
+                        <div class="d-flex align-items-center mb-6">
+                            <!--begin::Bullet-->
+                            <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+                            <!--end::Bullet-->
+                            <!--begin::Info-->
+                            <div class="flex-grow-1 me-5">
+                                <!--begin::Time-->
+                                <div class="text-gray-800 fw-semibold fs-2">
+                                    16:30 - 17:00
+                                    <span class="text-gray-500 fw-semibold fs-7">
+                                        PM
+                                    </span>
+                                </div>
+                                <!--end::Time-->
+                                <!--begin::Description-->
+                                <div class="text-gray-700 fw-semibold fs-6">
+                                    Marketing Campaign Discussion
+                                </div>
+                                <!--end::Description-->
+                                <!--begin::Link-->
+                                <div class="text-gray-500 fw-semibold fs-7">
+                                    Lead by
+                                    <!--begin::Name-->
+                                    <a href="#" class="text-primary opacity-75-hover fw-semibold">Lead by Mark Morris</a>
+                                    <!--end::Name-->
+                                </div>
+                                <!--end::Link-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Action-->
+                            <a href="#" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">View</a>
+                            <!--end::Action-->
+                        </div>
+                          
+                           
+
+                       
+
+
+                </div>
+
+
+
+
+                <!--end::Scroll-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::List widget 5-->
+
+
+    </div>
+</div>
