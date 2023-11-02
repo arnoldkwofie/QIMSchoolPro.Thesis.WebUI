@@ -33,6 +33,7 @@ namespace QIMSchoolPro.Thesis.WebUI.Services
             service.AddTransient<IAuthenticationService, AuthenticationService>();
             service.AddScoped<IHttpRequestService, HttpRequestService>();
             service.AddScoped<ISubmissionService, SubmissionService>();
+            service.AddScoped<IVersionService, VersionService>();
             service.AddSingleton<ILocalStorageService, LocalStorageService>();
 
 

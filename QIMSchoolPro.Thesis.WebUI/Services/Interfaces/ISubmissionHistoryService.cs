@@ -4,10 +4,8 @@ using QIMSchoolPro.Thesis.WebUI.Models.ViewModels;
 
 namespace QIMSchoolPro.Thesis.WebUI.Services.Interfaces
 {
-    public interface ISubmissionService 
+    public interface ISubmissionHistoryService 
     {
-        Task<RequestResponse> Create(SubmissionCommand payload);
-        Task<List<SubmissionViewModel>> GetUserSubmissions();
-        Task<SubmissionViewModel> GetAsync(int id);
+        Task<List<SubmissionHistoryViewModel>> GetSubmissionHistoryBySubmissionId(int id);
     }
 }

@@ -11,5 +11,9 @@ namespace QIMSchoolPro.Thesis.WebUI.Models.ViewModels
         public TransitionState TransitionState { get; set; }
         public DateTime SubmissionDate { get; set; }
         public AcademicPeriod AcademicPeriod { get; set; }
+        public List<DocumentViewModel> Documents { get; set; }
+        public List<SubmissionHistoryViewModel> SubmissionHistories { get; set; }
+
+        
     }
 }

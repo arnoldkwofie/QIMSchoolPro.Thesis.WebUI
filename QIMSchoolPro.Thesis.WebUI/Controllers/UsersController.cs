@@ -28,7 +28,7 @@ namespace QIMSchoolPro.Thesis.WebUI.Controllers
                 var isLoggedIn = await _authService.Authenticate(login.Email, login.Password);
                 if (isLoggedIn)
                 {
-                    returnUrl = Url.Content("~/Submission/Index");
+                    returnUrl = Url.Content("~/Home/Index");
                     return LocalRedirect(returnUrl);
                 }
                     

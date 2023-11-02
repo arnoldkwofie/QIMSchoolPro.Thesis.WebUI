@@ -2,29 +2,28 @@
 
 
 
-$("#frmSubmission").submit(function (e) {
+$("#frmUpload").submit(function (e) {
     
     e.preventDefault();
    
 	//var result = validateMarkEntry();
 	//if (result) {
-    PostMarksFilehandler('/Submission/Create', 'primaryFile', 'secondaryFile');
+    UploadFile('/Version/Create', 'fileId');
 	//}
 });
 
 
-function PostMarksFilehandler(route, primaryFileId, secondaryFileId) {
+function UploadFile(route, fileId) {
    
     
     //on();
     if (window.FormData !== undefined) {
-        var nfile_count = document.getElementById(primaryFileId);
+        var nfile_count = document.getElementById(fileId);
         if (nfile_count.files.length > 0) {
 
-            var nfile = document.getElementById(primaryFileId).files[0];
+            var nfile = document.getElementById(fileId).files[0];
             var fname = nfile.name;
 
-            var secfile = document.getElementById(secondaryFileId).files[0];
            
             var allowedExtensions = ['txt', 'pdf'];
             var extension = fname.substr(fname.lastIndexOf('.') + 1).toLowerCase();
@@ -37,10 +36,9 @@ function PostMarksFilehandler(route, primaryFileId, secondaryFileId) {
             } else {
 
                 var data = new FormData();
-                data.append("PrimaryFile", nfile); 
-                data.append("SecondaryFile", secfile);
-                data.append("Title", $('#title').val());
-                data.append("Abstract", $('#output').text());
+                data.append("File", nfile);
+                data.append("DocumentId", $('#doc_id').val());
+               
                
 
                 var messages = "";
@@ -54,33 +52,16 @@ function PostMarksFilehandler(route, primaryFileId, secondaryFileId) {
                     enctype: 'multipart/form-data',
                     success: function (response) {
 
-                        if (response) {
+                        if (response.isComplete) {
 
-                            if (response.length > 0) {
-
-                                $.each(response, function (index, value) {
-                                    messages += value + "\n\n";
-                                });
-
-                                messages = messages.replace(/\n/g, "<br>");
-                                console.log(messages);
-
-                                Swal.fire({
-                                    html: messages,
-                                    icon: 'warning',
-
-                                })
-                            } else {
-                                swal({
-                                    title: "Success",
-                                    icon: "success",
-                                    text: "Saved Successfully",
-                                    type: "success"
-                                }).then(function () {
-                                    window.location ="https://localhost:7223/Submission/MySubmissions";
-                                });
-
-                            }
+                            swal({
+                                title: "Success",
+                                icon: "success",
+                                text: "Saved Successfully",
+                                type: "success"
+                            }).then(function () {
+                                window.location.reload();
+                            });
 
 
                         } else {
@@ -93,10 +74,10 @@ function PostMarksFilehandler(route, primaryFileId, secondaryFileId) {
                     },
                     complete: function () {
                         //off();
-                        $('.indicator-progress').hide();
+                        //$('.indicator-progress').hide();
                        // $('#' + buttonId).attr('disabled', false);
                     },
-                    error: errorResponse
+                    //error: errorResponse
                 });
 
 
@@ -104,7 +85,7 @@ function PostMarksFilehandler(route, primaryFileId, secondaryFileId) {
         } else {
             showNotificationMessage("File Upload", "File not selected", "error", "", "");
            // off();
-            $('.indicator-progress').hide();
+            //$('.indicator-progress').hide();
            /* $('#' + buttonId).attr('disabled', false);*/
         } 
     }

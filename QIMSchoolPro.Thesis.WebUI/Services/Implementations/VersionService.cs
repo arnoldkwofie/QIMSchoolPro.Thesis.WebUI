@@ -8,13 +8,13 @@ using System.Threading;
 
 namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
 {
-    public class SubmissionService : ISubmissionService
+    public class VersionService : IVersionService
     {
         private readonly string _baseRoute;
         private readonly IHttpRequestService _httpAccessorService;
-        public SubmissionService(IConfiguration configuration, IHttpRequestService httpRequestService)
+        public VersionService(IConfiguration configuration, IHttpRequestService httpRequestService)
         {
-            _baseRoute = $"{configuration["ApplicationService:Master:BaseUrl"]}Submission";
+            _baseRoute = $"{configuration["ApplicationService:Master:BaseUrl"]}Version";
             _httpAccessorService = httpRequestService;
         }
 
@@ -25,7 +25,7 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
         //        new CancellationToken());
         //}
 
-        public async Task<RequestResponse> Create(SubmissionCommand payload)
+        public async Task<RequestResponse> Create(VersionCommand payload)
         {
             var client = new RestClient(_baseRoute);
             //var claims = await _httpAccessorService.GetClaimsAsync();
@@ -34,15 +34,10 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
                 RequestFormat = DataFormat.Json
             };
             //request.AddParameter("Authorization", "Bearer " + claims.Token, ParameterType.HttpHeader);
-            if (payload.PrimaryFile != null)
-                request.AddFile("PrimaryFile", payload.PrimaryFilePath ?? "");
-
-            if (payload.SecondaryFile != null)
-                request.AddFile("SecondaryFile", payload.SecondaryFilePath ?? "");
-
-            request.AddParameter("Title", payload.Title);
-            request.AddParameter("Abstract", payload.Abstract);
-            request.AddParameter("StudentNumber", payload.StudentNumber);
+            if (payload.File != null)
+                request.AddFile("File", payload.FilePath ?? "");
+            request.AddParameter("DocumentId", payload.DocumentId);
+           
             
             var response = await client.PostAsync(request);
            // var response = await client.ExecuteAsync<object>(request);
@@ -64,20 +59,6 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
         }
 
 
-        public async Task<List<SubmissionViewModel>> GetUserSubmissions()
-        {
-            var model = await _httpAccessorService
-                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.GetUserSubmissions(_baseRoute),
-                new CancellationToken());
-            return model;
-        }
-
-        public async Task<SubmissionViewModel> GetAsync(int id)
-        {
-            var model = await _httpAccessorService
-                .GetRequestAsync<SubmissionViewModel>(HttpUrlConstant.Get(_baseRoute, id),
-                new CancellationToken());
-            return model;
-        }
+   
     }
 }

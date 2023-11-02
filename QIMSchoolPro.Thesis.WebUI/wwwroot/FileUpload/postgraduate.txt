@@ -1,0 +1,16 @@
+public class BillingItemViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Audit Audit { get; set; }
+    }
+
+
+admissionletter_campus_year_cert_batch_entryType
+
+save&continue
+picture
+admissionLetter
+postgraduate registration
+acceptance letter
+campus off

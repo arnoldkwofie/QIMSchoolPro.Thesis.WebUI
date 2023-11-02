@@ -10,9 +10,12 @@ namespace QIMSchoolPro.Thesis.WebUI.Controllers
     public class SubmissionController : Controller
     {
         public ISubmissionService _submissionService { get; }
+        
         public SubmissionController(ISubmissionService submissionService)
         {
             _submissionService = submissionService;
+            
+
         }
         public IActionResult Index()
         {
@@ -59,13 +62,14 @@ namespace QIMSchoolPro.Thesis.WebUI.Controllers
 
         public async Task<IActionResult> MySubmissions( ) 
         {
-            var data = await _submissionService.GetsAsync();
+            var data = await _submissionService.GetUserSubmissions();
             return View(data);
         }
 
         public async Task<IActionResult> SubmissionDetail(int id)
         {
             var data = await _submissionService.GetAsync(id);
+           
             return View(data);
         }
 
