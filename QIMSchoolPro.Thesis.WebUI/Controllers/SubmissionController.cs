@@ -73,7 +73,7 @@ namespace QIMSchoolPro.Thesis.WebUI.Controllers
             return View(data);
         }
 
-        public async Task<IActionResult> test()
+        public async Task<IActionResult> Reports()
         {
             return View();
         }

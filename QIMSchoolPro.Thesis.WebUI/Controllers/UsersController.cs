@@ -58,10 +58,10 @@ namespace QIMSchoolPro.Thesis.WebUI.Controllers
             return View(registration);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Logout(string returnUrl)
+        //[HttpPost]
+        public async Task<IActionResult> Logout()
         {
-            returnUrl ??= Url.Content("~/");
+            string returnUrl = Url.Content("~/");
             await _authService.Logout();
             return LocalRedirect(returnUrl);
         }

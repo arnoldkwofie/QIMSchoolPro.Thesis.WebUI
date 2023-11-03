@@ -39,13 +39,13 @@
 	<!--begin::Heading-->
 	<div class="text-center mb-10">
 		<!--begin::Title-->
-		<h1 class="text-dark mb-3">Sign In to Metronic</h1>
+		<h1 class="text-dark mb-3">Sign In to TSAP</h1>
 		<!--end::Title-->
 		<!--begin::Link-->
-		<div class="text-gray-400 fw-bold fs-4">
+		@*<div class="text-gray-400 fw-bold fs-4">
 			New Here?
 			<a asp-controller="Users" asp-action="Register" class="link-primary fw-bolder">Create an Account</a>
-		</div>
+		</div>*@
 		<!--end::Link-->
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<input type="hidden" asp-for="ReturnUrl" />
@@ -69,8 +69,8 @@
 			<label class="form-label fw-bolder text-dark fs-6 mb-0" asp-for="Password"></label>
 			<!--end::Label-->
 			<!--begin::Link-->
-			<a href="../../demo8/dist/authentication/layouts/basic/password-reset.html" class="link-primary fs-6 fw-bolder">Forgot Password ?</a>
-			<!--end::Link-->
+@*			<a href="../../demo8/dist/authentication/layouts/basic/password-reset.html" class="link-primary fs-6 fw-bolder">Forgot Password ?</a>
+*@			<!--end::Link-->
 		</div>
 		<!--end::Wrapper-->
 		<!--begin::Input-->
