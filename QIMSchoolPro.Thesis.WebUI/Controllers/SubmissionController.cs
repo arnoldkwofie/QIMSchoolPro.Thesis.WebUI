@@ -73,6 +73,12 @@ namespace QIMSchoolPro.Thesis.WebUI.Controllers
             return View(data);
         }
 
+        public async Task<IActionResult> PostSubmission(PostSubmission command)
+        {
+            var data = await _submissionService.PostSubmission(command);
+            return Json(data);
+        }
+
         public async Task<IActionResult> Reports()
         {
             return View();

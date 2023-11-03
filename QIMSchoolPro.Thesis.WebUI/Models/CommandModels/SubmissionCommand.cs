@@ -11,4 +11,10 @@
         public string PrimaryFilePath { get; set; }
         public string SecondaryFilePath { get; set; }
     }
+
+    public class PostSubmission
+    { 
+        public int Id { get; set; }
+   
+    }
 }

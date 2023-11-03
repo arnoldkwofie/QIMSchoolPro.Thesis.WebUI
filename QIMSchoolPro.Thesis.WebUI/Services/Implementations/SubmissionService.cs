@@ -79,5 +79,16 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
                 new CancellationToken());
             return model;
         }
+
+
+        public async Task<RequestResponse> PostSubmission(PostSubmission coomand)
+        {
+            var model = await _httpAccessorService
+                .PostRequestAsync(HttpUrlConstant.PostSubmission(_baseRoute), coomand,
+                new CancellationToken());
+            return model;
+        }
+
+
     }
 }

@@ -9,5 +9,6 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Interfaces
         Task<RequestResponse> Create(SubmissionCommand payload);
         Task<List<SubmissionViewModel>> GetUserSubmissions();
         Task<SubmissionViewModel> GetAsync(int id);
+        Task<RequestResponse> PostSubmission(PostSubmission coomand);
     }
 }
