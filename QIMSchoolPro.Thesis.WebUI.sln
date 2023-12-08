@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QIMSchoolPro.Thesis.WebUI", "QIMSchoolPro.Thesis.WebUI\QIMSchoolPro.Thesis.WebUI.csproj", "{DF9C930D-AED1-41B6-9CD9-4E8821933B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QIMSchoolPro.Thesis.WebUI", "QIMSchoolPro.Thesis.WebUI\QIMSchoolPro.Thesis.WebUI.csproj", "{DF9C930D-AED1-41B6-9CD9-4E8821933B2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QIMSchoolPro.Thesis.AdminUI", "QIMSchoolPro.Thesis.AdminUI\QIMSchoolPro.Thesis.AdminUI.csproj", "{B725683C-B3D8-4608-90C2-7E6196FBCB74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DF9C930D-AED1-41B6-9CD9-4E8821933B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF9C930D-AED1-41B6-9CD9-4E8821933B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF9C930D-AED1-41B6-9CD9-4E8821933B2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B725683C-B3D8-4608-90C2-7E6196FBCB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B725683C-B3D8-4608-90C2-7E6196FBCB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B725683C-B3D8-4608-90C2-7E6196FBCB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B725683C-B3D8-4608-90C2-7E6196FBCB74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

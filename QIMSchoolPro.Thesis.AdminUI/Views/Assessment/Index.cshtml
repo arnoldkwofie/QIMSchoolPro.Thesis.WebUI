@@ -1,0 +1,83 @@
+﻿
+
+<div class="card card-xl-stretch mb-5 mb-xl-8">
+
+    <div class="card-header border-0">
+        <h3 class="card-title fw-bold text-dark">Assessments</h3>
+    </div>
+
+    <div class="card-body pt-0">
+
+        <table id="_submissionDatatable" class="table table-striped table-bordered dt-responsive " width="100%" cellspacing="0">
+            <thead>
+                <tr>
+
+                    <th>Submission #</th>
+                    <th>Submission State</th>
+                    <th>Student Number</th>
+                    <th>Student Name</th>
+                    <th>Programme</th>
+                    <th>Academic Year</th>
+                    <th>Academic Cycle</th>
+                    <th>Dead Line</th>
+                    <th>Last Modified</th>
+                    <th>Attachments</th>
+                    <th>Action</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>23</td>
+                    <td>Examiner Review</td>
+                    <td>50012217322</td>
+                    <td>Johnson Smith</td>
+                    <td>Phd Electrical and Electronic Engineering</td>
+                    <td>2022/2023</td>
+                    <td>July Admission</td>
+                    <td>1 Feb 2024</td>
+                    <td>20 Dec 2023</td>
+                    <td>
+                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Thesis File </a> <br />
+                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Extra File </a>
+
+                    </td>
+                    <td><button class="btn btn-success btn-sm">Score</button></td>
+                </tr>
+
+                <tr>
+                    <td>22</td>
+                    <td>Examiner Review</td>
+                    <td>50012214322</td>
+                    <td>Haruna Seidu</td>
+                    <td>Mphil Mining Engineering</td>
+                    <td>2022/2023</td>
+                    <td>July Admission</td>
+                    <td>1 Feb 2024</td>
+                    <td>20 Dec 2023</td>
+                    <td>
+                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Thesis File </a> <br />
+                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Extra File </a>
+
+                    </td>
+                    <td><button class="btn btn-success btn-sm">Score</button></td>
+                </tr>
+
+             
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#_submissionDatatable').DataTable({
+            searching: true,  // Enable or disable search functionality
+            ordering: true     // Enable or disable sorting
+        });
+    });
+</script>
