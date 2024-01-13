@@ -1,4 +1,4 @@
-using QIMSchoolPro.Thesis.WebUI.Services;
+using QIMSchoolPro.Thesis.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QIMSchoolPro.Thesis.WebUI.Contracts;
-using QIMSchoolPro.Thesis.WebUI.Models.ViewModels;
+using QIMSchoolPro.Thesis.Services.Models.ViewModels;
+using QIMSchoolPro.Thesis.Services.Contracts;
 
 namespace QIMSchoolPro.Thesis.WebUI.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using QIMSchoolPro.Thesis.WebUI.Models.CommandModels;
-using QIMSchoolPro.Thesis.WebUI.Services.Interfaces;
+
+using QIMSchoolPro.Thesis.Services.Services.Interfaces;
 using System.Net;
 using System.Reflection;
 

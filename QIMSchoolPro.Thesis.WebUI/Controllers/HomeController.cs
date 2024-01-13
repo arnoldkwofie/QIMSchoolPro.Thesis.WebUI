@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QIMSchoolPro.Thesis.WebUI.Models;
 using System.Diagnostics;
 
 namespace QIMSchoolPro.Thesis.WebUI.Controllers

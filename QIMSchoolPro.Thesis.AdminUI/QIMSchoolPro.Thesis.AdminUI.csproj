@@ -102,4 +102,12 @@
     <None Include="wwwroot\dtb\notification\sweetJs.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QIMSchoolPro.Thesis.Services\QIMSchoolPro.Thesis.Services.csproj" />
+  </ItemGroup>
+
 </Project>

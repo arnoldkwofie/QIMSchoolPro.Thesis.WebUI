@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QIMSchoolPro.Thesis.AdminUI.Models;
-using System.Diagnostics;
+
 
 namespace QIMSchoolPro.Thesis.AdminUI.Controllers
 {
@@ -23,10 +22,6 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    
     }
 }
