@@ -1,5 +1,194 @@
 ﻿
 
+
+
+
+
+<div class="modal fade" id="Add_Score" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="frmUpload">
+                <div class="modal-header">
+                    <h5 class="modal-title changeModalName" id="exampleModalLabel">Assessment</h5>
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="fa fa-times"><span class="path1"></span><span class="path2"></span></i>
+                    </div>
+                </div>
+                <div class="modal-body">
+
+
+
+
+
+
+
+                    <div class="container">
+                        <div class="progress-container">
+                            <ul id="progressbar">
+                                <li class="active"
+                                    id="step1">
+                                    <strong>Step 1</strong>
+                                </li>
+                                <li id="step2">
+                                    <strong>Step 2</strong>
+                                </li>
+                                <li id="step3">
+                                    <strong>Step 3</strong>
+                                </li>
+                                <li id="step4">
+                                    <strong>Step 4</strong>
+                                </li>
+                            </ul>
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                        </div>
+                        <div class="step-container">
+                            <fieldset>
+                                <h4>
+                                    Relevance of topic, research problem and its
+                                    value to the development of science
+                                </h4>
+                                <p>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <b>out of</b>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <b>50 marks</b>
+                                        </div>
+                                    </div>
+                                     
+                                </p>
+                                <input type="button"
+                                       name="next-step"
+                                       class="next-step"
+                                       value="Next Step" />
+                            </fieldset>
+                            <fieldset>
+                                <h4>Candidate’s knowledge of pertinent literature</h4>
+                                <p>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <b>out of</b>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <b>50 marks</b>
+                                        </div>
+                                    </div>
+
+                                </p>
+                                <input type="button"
+                                       name="next-step"
+                                       class="next-step"
+                                       value="Next Step" />
+                                <input type="button"
+                                       name="previous-step"
+                                       class="previous-step"
+                                       value="Previous Step" />
+                            </fieldset>
+                            <fieldset>
+                                <h4>
+                                    Methods used, validity of data, depth and
+                                    soundness of analysis
+                                </h4>
+                                <p>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <b>out of</b>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <b>50 marks</b>
+                                        </div>
+                                    </div>
+
+                                </p>
+                                <input type="button"
+                                       name="next-step"
+                                       class="next-step"
+                                       value="Final Step" />
+                                <input type="button"
+                                       name="previous-step"
+                                       class="previous-step"
+                                       value="Previous Step" />
+                            </fieldset>
+                            <fieldset>
+                                <div class="finish">
+                                    <h2 class="text">
+                                        <strong>
+                                            Candidate’s main findings, novelty and
+                                            soundness of recommendations
+                                        </strong>
+                                    </h2>
+                                    <p>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <b>out of</b>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <b>50 marks</b>
+                                            </div>
+                                        </div>
+
+                                    </p>
+                                </div>
+                                <input type="button"
+                                       name="previous-step"
+                                       class="previous-step"
+                                       value="Previous Step" />
+                            </fieldset>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions">
+                            <input type="submit" class="btn btn-primary changeButtonName" value="Upload">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="card card-xl-stretch mb-5 mb-xl-8">
 
     <div class="card-header border-0">
@@ -44,7 +233,7 @@
                         <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Extra File </a>
 
                     </td>
-                    <td><button class="btn btn-success btn-sm">Score</button></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#Add_Score">Score</button></td>
                 </tr>
 
                 <tr>
@@ -80,4 +269,195 @@
             ordering: true     // Enable or disable sorting
         });
     });
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const progressListItems =
+            document.querySelectorAll("#progressbar li");
+        const progressBar =
+            document.querySelector(".progress-bar");
+        let currentStep = 0;
+
+        function updateProgress() {
+            const percent =
+                (currentStep / (progressListItems.length - 1)) * 100;
+            progressBar.style.width = percent + "%";
+
+            progressListItems.forEach((item, index) => {
+                if (index === currentStep) {
+                    item.classList.add("active");
+                } else {
+                    item.classList.remove("active");
+                }
+            });
+        }
+
+        function showStep(stepIndex) {
+            const steps =
+                document.querySelectorAll(".step-container fieldset");
+            steps.forEach((step, index) => {
+                if (index === stepIndex) {
+                    step.style.display = "block";
+                } else {
+                    step.style.display = "none";
+                }
+            });
+        }
+
+        function nextStep() {
+            if (currentStep < progressListItems.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+                updateProgress();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+                updateProgress();
+            }
+        }
+
+        const nextStepButtons =
+            document.querySelectorAll(".next-step");
+        const prevStepButtons =
+            document.querySelectorAll(".previous-step");
+
+        nextStepButtons.forEach((button) => {
+            button.addEventListener("click", nextStep);
+        });
+
+        prevStepButtons.forEach((button) => {
+            button.addEventListener("click", prevStep);
+        });
+    });
+
+
+
+
+
+
 </script>
+
+
+
+                        <style>
+    /* style.css */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        margin: 20px auto;
+    }
+
+    .progress-container {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #progressbar {
+        list-style-type: none;
+        display: flex;
+        justify-content: space-between;
+        color: lightgrey;
+    }
+
+        #progressbar li {
+            flex: 1;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            position: relative;
+        }
+
+            #progressbar li.active {
+                color: #2F8D46;
+            }
+
+    .progress {
+        height: 20px;
+        background-color: lightgray;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        background-color: #2F8D46;
+        width: 0;
+        height: 100%;
+        transition: width 0.4s ease-in-out;
+    }
+
+    .step-container fieldset {
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 20px;
+        position: relative;
+        display: none;
+    }
+
+        .step-container fieldset:first-of-type {
+            display: block;
+        }
+
+    h2 {
+        color: #2F8D46;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .next-step,
+    .previous-step {
+        width: 100px;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px 10px 0px;
+        float: right;
+    }
+
+    .next-step {
+        background: #2F8D46;
+    }
+
+    .previous-step {
+        background: #616161;
+    }
+
+    .next-step:hover,
+    .next-step:focus {
+        background-color: #1e6f3e;
+    }
+
+    .previous-step:hover,
+    .previous-step:focus {
+        background-color: #4d4d4d;
+    }
+
+    .text {
+        color: #2F8D46;
+        font-weight: normal;
+    }
+
+    .finish {
+        text-align: center;
+    }
+                        </style>
