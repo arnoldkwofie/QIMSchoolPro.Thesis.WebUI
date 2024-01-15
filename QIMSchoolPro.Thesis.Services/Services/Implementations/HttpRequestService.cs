@@ -70,5 +70,41 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             throw new Exception(error);
 
         }
+
+
+
+        public async Task<RequestResponse> GetDeptReviewRequestAsync(string path, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var client = new RestClient();
+                var request = new RestRequest(path, Method.Get);
+                //var claims = await GetClaimsAsync();
+                //request.AddHeader("Authorization", "Bearer " + claims.Token);
+                var response = await client.ExecuteAsync<object>(request, cancellationToken);
+
+                if (response.IsSuccessful)
+                {
+                    return RequestResponse.Done("Added Successfully");
+                }
+                else
+                {
+                    if (response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        return RequestResponse.BadRequest(response.Content.Replace("\\", " "));
+                    }
+                    else
+                    {
+                        return RequestResponse.Error(response.ErrorMessage, response.Content);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return RequestResponse.Error(ex);
+            }
+
+
+        }
     }
 }

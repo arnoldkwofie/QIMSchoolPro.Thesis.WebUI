@@ -11,5 +11,8 @@ namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
         Task<List<SubmissionViewModel>> GetUserSubmissions();
         Task<SubmissionViewModel> GetAsync(int id);
         Task<RequestResponse> PostSubmission(PostSubmission coomand);
+        Task<List<SubmissionViewModel>> GetDepartmentSubmissions();
+        Task<List<SubmissionViewModel>> GetSPSSubmissions();
+        Task<RequestResponse> Departmentapproval(int submissionId, int approvalId);
     }
 }

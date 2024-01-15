@@ -6,5 +6,7 @@ namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
     {
         Task<RequestResponse> PostRequestAsync<TPayload>(string path, TPayload payload, CancellationToken cancellationToken);
         Task<T> GetRequestAsync<T>(string path, CancellationToken cancellationToken);
+
+        Task<RequestResponse> GetDeptReviewRequestAsync(string path, CancellationToken cancellationToken);
     }
 }

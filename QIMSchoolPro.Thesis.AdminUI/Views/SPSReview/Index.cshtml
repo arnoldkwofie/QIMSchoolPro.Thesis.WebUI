@@ -5,8 +5,8 @@
     <div class="card-header pt-7">
         <!--begin::Title-->
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bold text-gray-900">My Submissions</span>
-           @* <span class="text-gray-500 mt-1 fw-semibold fs-6">View All Submissions</span>*@
+            <span class="card-label fw-bold text-gray-900">SPS Review</span>
+            @* <span class="text-gray-500 mt-1 fw-semibold fs-6">View All Submissions</span>*@
         </h3>
         <!--end::Title-->
         <!--begin::Actions-->
@@ -16,28 +16,26 @@
                 <!--begin::Destination-->
                 <div class="d-flex align-items-center fw-bold">
                     <!--begin::Label-->
-                   @* <div class="text-muted fs-7 me-2">State</div>*@
+                    @* <div class="text-muted fs-7 me-2">State</div>*@
                     <!--end::Label-->
                     <!--begin::Select-->
                     @*<select class="form-select form-select-transparent text-gray-900 fs-7 lh-1 fw-bold py-0 ps-3 w-auto select2-hidden-accessible" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Select an option" data-select2-id="select2-data-16-niwu" tabindex="-1" aria-hidden="true" data-kt-initialized="1">
-                        <option></option>
-                        <option value="Show All" selected="" data-select2-id="select2-data-18-gfl7">Show All</option>
-                        <option value="1">Created</option>
-                        <option value="2">Department Review</option>
-                        <option value="3">SPS Review</option>
-                        <option value="4">Examiner Review</option>
+                    <option></option>
+                    <option value="Show All" selected="" data-select2-id="select2-data-18-gfl7">Show All</option>
+                    <option value="1">Created</option>
+                    <option value="2">Department Review</option>
+                    <option value="3">SPS Review</option>
+                    <option value="4">Examiner Review</option>
                     </select>*@
                     <!--end::Select-->
                 </div>
-              
+
             </div>
             <!--begin::Filters-->
         </div>
         <!--end::Actions-->
     </div>
     <!--end::Card header-->
-  
-
     <!--begin::Card body-->
     <div class="card-body">
         <!--begin::Table-->
@@ -48,38 +46,49 @@
                     <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                           
+
                             <th>Submission #</th>
-                            <th>Title</th>
+                            <th>StudentId</th>
+                            <th>Name</th>
+                            <th>Programe</th>
+                            <th>Department</th>
+                           
                             <th>Transition State</th>
-                            <th>Date Submitted</th>
+                            <th>Date Created</th>
                             <th>Last Modified</th>
                             <th>AcademicYear</th>
                             <th>Action</th>
-                         </tr>
-                            
-                            <!--end::Table row-->
+                        </tr>
+
+                        <!--end::Table row-->
                     </thead>
                     <!--end::Table head-->
                     <!--begin::Table body-->
                     <tbody class="fw-bold text-gray-600">
-                        @foreach(var data in Model)
+                        @foreach (var data in Model)
                         {
                             <tr>
-                                <!--begin::Item-->
+
                                 <td>
                                     # @data.Id
                                 </td>
-                                <!--end::Item-->
-                                <!--begin::Product ID-->
                                 <td>
-                                    @data.Title
+                                    @data.StudentNumber
                                 </td>
-                                <!--end::Product ID-->
-                                <!--begin::Date added-->
+                                <td>
+                                    @data.Student?.Party?.Name?.FirstName  @data.Student?.Party?.Name?.LastName
+                                </td>
+                                <td>
+                                    @data.Student?.Programme?.Name
+                                </td>
+                                <td>
+                                    @data.Student?.Programme?.Department.Name
+                                </td>
+                               
+
                                 <td>
 
-                                    @if(data.TransitionState==TransitionState.Created)
+                                    @if (data.TransitionState == TransitionState.Created)
                                     {
                                         <span class="badge badge-light-primary fs-8 fw-bold my-2">Created</span>
                                     }
@@ -98,7 +107,7 @@
                                         <span class="badge badge-light-secondary fs-8 fw-bold my-2">Examiner Review</span>
                                     }
 
-                                   
+
                                 </td>
                                 <!--end::Date added-->
                                 <!--begin::Price-->
@@ -119,17 +128,12 @@
                                 <td>
                                     <a asp-action="SubmissionDetail" asp-controller="Submission" asp-route-id="@data.Id">View</a> |
                                    
-                                    @if(data.TransitionState == TransitionState.Created)
-                                    {
-                                       <a href="#">Delete</a>
-                                    }
-                                    
                                 </td>
                                 <!--end::Qty-->
                             </tr>
                         }
-                      
-                     
+
+
                     </tbody>
                     <!--end::Table body-->
                 </table>
@@ -145,8 +149,8 @@
 <script>
     $(document).ready(function () {
         $('#_mysubmissionDatatable').DataTable({
-            searching: true,  
-            ordering: true     
+            searching: true,
+            ordering: true
         });
     });
 </script>

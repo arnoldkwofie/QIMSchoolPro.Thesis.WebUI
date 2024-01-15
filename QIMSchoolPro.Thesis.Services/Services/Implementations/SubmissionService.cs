@@ -73,6 +73,22 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
+        public async Task<List<SubmissionViewModel>> GetDepartmentSubmissions()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.GetDepartmentSubmissions(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<SubmissionViewModel>> GetSPSSubmissions()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.GetSPSSubmissions(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
         public async Task<SubmissionViewModel> GetAsync(int id)
         {
             var model = await _httpAccessorService
@@ -81,11 +97,18 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
-
-        public async Task<RequestResponse> PostSubmission(PostSubmission coomand)
+        public async Task<RequestResponse> Departmentapproval(int submissionId, int approvalId)
         {
             var model = await _httpAccessorService
-                .PostRequestAsync(HttpUrlConstant.PostSubmission(_baseRoute), coomand,
+                .GetDeptReviewRequestAsync(HttpUrlConstant.DepartmentApproval(_baseRoute, submissionId, approvalId),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<RequestResponse> PostSubmission(PostSubmission payload)
+        {
+            var model = await _httpAccessorService
+                .PostRequestAsync(HttpUrlConstant.PostSubmission(_baseRoute), new { payload },
                 new CancellationToken());
             return model;
         }

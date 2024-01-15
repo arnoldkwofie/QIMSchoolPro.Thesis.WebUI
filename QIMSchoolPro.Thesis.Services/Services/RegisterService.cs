@@ -40,6 +40,7 @@ namespace QIMSchoolPro.Thesis.Services.Services
             service.AddScoped<IVersionService, VersionService>();
             service.AddScoped<IThesisAssignmentService, ThesisAssignmentService>();
             service.AddSingleton<ILocalStorageService, LocalStorageService>();
+            service.AddScoped<IStaffService, StaffService>();
 
 
             return service;

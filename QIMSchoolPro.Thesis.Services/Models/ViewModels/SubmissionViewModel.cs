@@ -8,6 +8,7 @@ namespace QIMSchoolPro.Thesis.Services.Models.ViewModels
     {
         public int Id { get; set; }
         public string StudentNumber { get; set; }
+        public StudentViewModel Student { get; set; }
         public string Title { get; set; }
         public string Abstract { get; set; }
         public TransitionState TransitionState { get; set; }
