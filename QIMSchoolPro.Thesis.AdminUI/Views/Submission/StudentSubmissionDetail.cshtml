@@ -145,7 +145,7 @@
                                                     @foreach (var version in document.Versions)
                                                     {
                                                         <li>
-                                                            <span><img src="/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @version.Name</span>
+                                                            <a href="/thesis/FileUpload/@version.Path"> <span><img src="/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @version.Name</span></a>
                                                                 <a href="#">Remove</a>
 
                                                             
@@ -176,7 +176,7 @@
                                                     @foreach (var version in document.Versions)
                                                     {
                                                         <li>
-                                                            <span><img src="/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @version.Name</span>
+                                                            <a href="/thesis/FileUpload/@version.Path"> <span><img src="/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @version.Name</span></a>
                                                             
                                                         </li>
                                                     }

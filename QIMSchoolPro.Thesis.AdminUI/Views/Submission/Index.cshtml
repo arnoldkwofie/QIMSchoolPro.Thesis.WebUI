@@ -1,100 +1,238 @@
-﻿
-
-<div class="card card-xl-stretch mb-5 mb-xl-8">
-   
-    <div class="card-header border-0">
-        <h3 class="card-title fw-bold text-dark">Submissions</h3>
-    </div>
-   
-    <div class="card-body pt-0">
-
-<table id="_submissionDatatable" class="table table-striped table-bordered dt-responsive " width="100%" cellspacing="0">
-    <thead>
-        <tr>
-
-            <th>Submission #</th>
-            <th>Submission State</th>
-            <th>Student Number</th>
-            <th>Student Name</th>
-            <th>Programme</th>
-            <th>Academic Year</th>
-            <th>Academic Cycle</th>
-            <th>Dead Line</th>
-            <th>Last Modified</th>
-            <th>Attachments</th>
-            <th>Action</th>
-         
-
-        </tr>
-    </thead>
-    <tbody>
-       
-            <tr>
-                <td>235656767</td>
-                <td>Examiner Review</td>
-                 <td>50012217322</td>
-                <td>Johnson Smith</td>
-                <td>Phd Electrical and Electronic Engineering</td>
-                <td>2022/2023</td>
-                <td>July Admission</td>
-                <td>1 Feb 2024</td>
-                <td>20 Dec 2023</td>
-                <td>
-                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Thesis File </a> <br />
-                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Extra File </a>
-                    
-                </td>
-                <td><button class="btn btn-primary btn-sm">Accept/Reject</button></td>
-            </tr>
-
-                <tr>
-                    <td>22</td>
-                    <td>Examiner Review</td>
-                    <td>50012214322</td>
-                    <td>Haruna Seidu</td>
-                    <td>Mphil Mining Engineering</td>
-                    <td>2022/2023</td>
-                    <td>July Admission</td>
-                    <td>1 Feb 2024</td>
-                    <td>20 Dec 2023</td>
-                    <td>
-                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Thesis File </a> <br />
-                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Extra File </a>
-
-                    </td>
-                    <td><button class="btn btn-primary btn-sm">Accept/Reject</button></td>
-                </tr>
-
-                <tr>
-                    <td>21</td>
-                    <td>Examiner Review</td>
-                    <td>50012217322</td>
-                    <td>Emmanuel Adams</td>
-                    <td>Phd Mathematics</td>
-                    <td>2022/2023</td>
-                    <td>July Admission</td>
-                    <td>1 Feb 2024</td>
-                    <td>20 Dec 2023</td>
-                    <td>
-                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Thesis File </a> <br />
-                        <a href="#"><i class="fa fa-paperclip" aria-hidden="true"></i>Extra File </a>
-
-                    </td>
-                    <td><button class="btn btn-primary btn-sm">Accept/Reject</button></td>
-                </tr>
-               
-
-    </tbody>
-</table>
-
-</div>
-</div>
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
 <script>
+
+    //$(document).ready(function () {
+    //    const fileInput = document.getElementById("primaryFile");
+    //const outputDiv = document.getElementById("output");
+    //    fileInput.addEventListener("change", function () {
+    //    if (fileInput.files.length > 0) {
+    //        const file = fileInput.files[0];
+
+    //        //if (file.type === "application/pdf") {
+    //            const reader = new FileReader();
+
+    //            reader.onload = function (event) {
+                    
+
+    //                const content = event.target.result;
+
+    //                console.log(content)
+    //                $('#output').text(content);
+
+    //                outputDiv.textContent = content;
+                        
+    //            };
+                
+
+    //            reader.readAsText(file);
+    //        //} else {
+    //        //    outputDiv.textContent = "Unsupported file format. Please upload a PDF document.";
+    //        //}
+    //    } else {
+    //        outputDiv.textContent = "Please select a file to extract content from.";
+    //    }
+    //});
+    //});
+
+
+
+
+
+
+
+
+
+
+
+
     $(document).ready(function () {
-        $('#_submissionDatatable').DataTable({
-            searching: true,  // Enable or disable search functionality
-            ordering: true     // Enable or disable sorting
+        const fileInput = document.getElementById("primaryFile");
+        const outputDiv = document.getElementById("output");
+
+        fileInput.addEventListener("change", function () {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+
+                // Check if the selected file is a PDF
+                if (file.type === "application/pdf") {
+                    const reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        const typedarray = new Uint8Array(event.target.result);
+
+                        // Load the PDF file using PDF.js
+                        pdfjsLib.getDocument(typedarray).promise.then(function (pdf) {
+                            // Initialize variables to store content
+                            let content = '';
+                            let totalPages = pdf.numPages;
+
+                            // Iterate through each page to extract text
+                            for (let i = 1; i <= totalPages; i++) {
+                                pdf.getPage(i).then(function (page) {
+                                    // Get text content of the page
+                                    page.getTextContent().then(function (textContent) {
+                                        // Concatenate text from this page
+                                        textContent.items.forEach(function (textItem) {
+                                            content += textItem.str + ' ';
+                                        });
+                                        // Append a line break after each page
+                                        content += '\n';
+
+                                        // If it's the last page, display the content
+                                        if (i === totalPages) {
+                                            outputDiv.textContent = content;
+                                        }
+                                    });
+                                });
+                            }
+                        }, function (error) {
+                            console.error('Error loading the PDF: ' + error);
+                            outputDiv.textContent = "Error loading the PDF.";
+                        });
+                    };
+
+                    reader.readAsArrayBuffer(file);
+                } else {
+                    outputDiv.textContent = "Unsupported file format. Please upload a PDF document.";
+                }
+            } else {
+                outputDiv.textContent = "Please select a file to extract content from.";
+            }
         });
     });
+
+
+
+
+
+
+
 </script>
+
+
+
+
+
+<div class="content d-flex flex-column flex-column-fluid " id="kt_content">
+
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+
+        <div id="kt_content_container" class=" container-xxl ">
+
+            <div class="d-flex flex-column flex-lg-row">
+
+                <div class="flex-lg-row-fluid ms-lg-12 ms-xl-10">
+
+                    <!--begin::Card-->
+                    <div class="card">
+                        <form id="frmSubmission">
+                        <div class="card-header d-flex align-items-center justify-content-between py-3">
+                            <h2 class="card-title m-0">
+                                Thesis Submission
+                            </h2>
+
+                            <!--begin::Toggle-->
+                            <a href="#" class="btn btn-sm btn-icon btn-color-primary btn-light btn-active-light-primary d-lg-none" data-bs-toggle="tooltip" data-bs-dismiss="click" data-bs-placement="top" id="kt_inbox_aside_toggle" aria-label="Toggle inbox menu" data-bs-original-title="Toggle inbox menu" data-kt-initialized="1">
+                                <i class="ki-duotone ki-burger-menu-2 fs-3 m-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span></i>
+                            </a>
+                            <!--end::Toggle-->
+                        </div>
+
+                        <div class="card-body p-0">
+
+                            <div class="container">
+                                <br />
+                               
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Title</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                        <input type="text" name="title" id="title" class="form-control form-control-lg form-control-solid" placeholder="Thesis Title" value="">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Thesis File</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                            <input type="file" id="primaryFile" class="form-control form-control-lg form-control-solid">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                    <div class="row mb-6">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Thesis Form</label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                            <input type="file" id="thesisForm" class="form-control form-control-lg form-control-solid">
+                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+
+
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Secondary File</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                            <input type="file" id="secondaryFile" class="form-control form-control-lg form-control-solid">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+
+
+
+
+                                <div id="kt_inbox_form_editor" class="bg-transparent border-0 h-350px px-3 ql-container ql-snow">
+                                    <div class="ql-editor ql-blank" id="output" data-gramm="false" contenteditable="true" data-placeholder=""><p><br></p></div>
+                                    <div class="ql-clipboard" contenteditable="true" tabindex="-1"></div><div class="ql-tooltip ql-hidden">
+                                        <a class="ql-preview" rel="noopener noreferrer" target="_blank" href="about:blank"></a>
+                                        <input type="text"  data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL"><a class="ql-action"></a>
+                                        <a class="ql-remove"></a>
+                                    </div>
+                                </div>
+                                <!--end::Message-->
+
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                        <!--begin::Footer-->
+                        <div class="d-flex flex-stack flex-wrap gap-2 py-5 ps-8 pe-5 border-top">
+                            <!--begin::Actions-->
+                            <div class="d-flex align-items-center me-3">
+                                <!--begin::Send-->
+                                <div class="btn-group me-4">
+                                        <input type="submit"  class="btn btn-primary fs-bold px-6" value="Upload" />
+                                </div>
+
+                            </div>
+                            <!--end::Actions-->
+
+                        </div>
+                        <!--end::Footer-->
+                        </form>
+                    </div>
+                    <!--end::Card-->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/app/submission/addsubmission.js"></script>

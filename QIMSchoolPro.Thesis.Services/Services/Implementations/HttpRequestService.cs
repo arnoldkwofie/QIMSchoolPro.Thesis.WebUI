@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using QIMSchoolPro.Thesis.Services.Models.ServiceModels;
+using QIMSchoolPro.Thesis.Services.Models.ViewModels;
 using QIMSchoolPro.Thesis.Services.Services.Interfaces;
 using RestSharp;
 using System.Net;
@@ -52,8 +54,34 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
         {
             var client = new RestClient();
             var request = new RestRequest(path, Method.Get);
-            //var claims = await GetClaimsAsync();
-            //request.AddHeader("Authorization", "Bearer " + claims.Token);
+            var claims = await GetClaimsAsync();
+            request.AddHeader("Authorization", "Bearer " + claims.Token);
+            var response = await client.ExecuteAsync<T>(request, cancellationToken);
+
+            if (response.IsSuccessful)
+            {
+                return response.Data;
+            }
+
+            var error = response.ErrorMessage;
+
+            if (string.IsNullOrEmpty(error))
+                error = response.Content.ToString();
+
+
+            throw new Exception(error);
+
+        }
+
+
+
+        public async Task<T> GetPostRequestAsync<T>(string path, object payload, CancellationToken cancellationToken)
+        {
+            var client = new RestClient();
+            var request = new RestRequest(path, Method.Post);
+            request.AddJsonBody(payload);
+            var claims = await GetClaimsAsync();
+            request.AddHeader("Authorization", "Bearer " + claims.Token);
             var response = await client.ExecuteAsync<T>(request, cancellationToken);
 
             if (response.IsSuccessful)
@@ -106,5 +134,16 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
 
 
         }
+
+
+
+        public async Task<IAuthorityClaims> GetClaimsAsync()
+        {
+            return new IAuthorityClaims
+            {
+                Token = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token"),
+            };
+        }
+
     }
 }

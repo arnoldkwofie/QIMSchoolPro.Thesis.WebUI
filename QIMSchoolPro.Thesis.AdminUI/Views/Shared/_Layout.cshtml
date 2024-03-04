@@ -39,8 +39,8 @@ License: For each use you must have a valid license purchased only from above li
 		<!--begin::Page-->
 		<div class="page d-flex flex-row flex-column-fluid">
 			<!--begin::Aside-->
-			@await Html.PartialAsync("_AsideMenu")
-
+			@*@await Html.PartialAsync("_AsideMenu")*@
+			@await Component.InvokeAsync("SideBar")
 
 			<!--end::Aside-->
 			<!--begin::Wrapper-->

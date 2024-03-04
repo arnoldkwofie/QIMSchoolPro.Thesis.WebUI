@@ -29,14 +29,17 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
         public async Task<RequestResponse> Create(SubmissionCommand payload)
         {
             var client = new RestClient(_baseRoute);
-            //var claims = await _httpAccessorService.GetClaimsAsync();
+            var claims = await _httpAccessorService.GetClaimsAsync();
             var request = new RestRequest($"/Create", Method.Post)
             {
                 RequestFormat = DataFormat.Json
             };
-            //request.AddParameter("Authorization", "Bearer " + claims.Token, ParameterType.HttpHeader);
+            request.AddParameter("Authorization", "Bearer " + claims.Token, ParameterType.HttpHeader);
             if (payload.PrimaryFile != null)
                 request.AddFile("PrimaryFile", payload.PrimaryFilePath ?? "");
+
+            if (payload.ThesisForm != null)
+                request.AddFile("ThesisForm", payload.ThesisFormPath ?? "");
 
             if (payload.SecondaryFile != null)
                 request.AddFile("SecondaryFile", payload.SecondaryFilePath ?? "");

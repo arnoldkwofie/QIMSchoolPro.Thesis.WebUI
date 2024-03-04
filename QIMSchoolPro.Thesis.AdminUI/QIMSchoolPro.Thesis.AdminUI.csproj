@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -35,6 +35,14 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Update="Views\Submission\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\app\sweetJs.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +53,9 @@
     <_ContentIncludedByDefault Remove="Views\Shared\_AsideMenu.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_Footer.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_HeaderMenu.cshtml" />
+    <_ContentIncludedByDefault Remove="wwwroot\app\http-request-handlers.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\app\Submission\addSubmission.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\app\Submission\manageFile.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -100,10 +111,23 @@
     <None Include="wwwroot\dtb\lib\jquery\dist\jquery.min.js" />
     <None Include="wwwroot\dtb\lib\jquery\dist\jquery.min.map" />
     <None Include="wwwroot\dtb\notification\sweetJs.js" />
+    <None Include="wwwroot\login\general.js" />
+    <None Include="wwwroot\login\media\apple-black-dark.svg" />
+    <None Include="wwwroot\login\media\apple-black.svg" />
+    <None Include="wwwroot\login\media\custom-3.svg" />
+    <None Include="wwwroot\login\media\france.svg" />
+    <None Include="wwwroot\login\media\germany.svg" />
+    <None Include="wwwroot\login\media\google-icon.svg" />
+    <None Include="wwwroot\login\media\japan.svg" />
+    <None Include="wwwroot\login\media\spain.svg" />
+    <None Include="wwwroot\login\media\united-states.svg" />
+    <None Include="wwwroot\login\plugins.bundle.js" />
+    <None Include="wwwroot\login\scripts.bundle.js" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="wwwroot\FileUpload\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
+using QimSchoolPro.Thesis.Services.Implementations;
+using Microsoft.AspNetCore.Authentication;
 
 namespace QIMSchoolPro.Thesis.Services.Services
 {
@@ -24,23 +26,27 @@ namespace QIMSchoolPro.Thesis.Services.Services
             service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = new PathString("/users/login");
+                    //options.LoginPath = new PathString("/users/login");
+                    options.LoginPath = "/UserAccount/Login";
+                    options.LogoutPath = "/UserAccount/Login";
+
+                    options.AccessDeniedPath = "/UserAccount/AccessDenied";
                 });
 
+           
 
-
-            service.AddHttpClient<IClient, Client>(cl => cl.BaseAddress = new Uri("https://localhost:7295"));
-            //service.AddHttpClient<IClient, Client>(cl => cl.BaseAddress = new Uri("https://localhost:7116"));
             service.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
-            service.AddTransient<IAuthenticationService, AuthenticationService>();
+            //service.AddTransient<IAuthenticationService, AuthenticationService>();
             service.AddScoped<IHttpRequestService, HttpRequestService>();
             service.AddScoped<ISubmissionService, SubmissionService>();
             service.AddScoped<IVersionService, VersionService>();
             service.AddScoped<IThesisAssignmentService, ThesisAssignmentService>();
             service.AddSingleton<ILocalStorageService, LocalStorageService>();
             service.AddScoped<IStaffService, StaffService>();
+            service.AddScoped<IAuthService, AuthService>();
+            service.AddScoped<IUserService, UserService>();
 
 
             return service;

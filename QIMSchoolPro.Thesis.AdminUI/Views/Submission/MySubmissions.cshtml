@@ -1,0 +1,150 @@
+﻿@using QIMSchoolPro.Thesis.Services.Models.Enum;
+@model IEnumerable<QIMSchoolPro.Thesis.Services.Models.ViewModels.SubmissionViewModel>
+<div class="card card-flush h-xl-100">
+    <!--begin::Card header-->
+    <div class="card-header pt-7">
+        <!--begin::Title-->
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bold text-gray-900">My Submissions</span>
+            @* <span class="text-gray-500 mt-1 fw-semibold fs-6">View All Submissions</span>*@
+        </h3>
+        <!--end::Title-->
+        <!--begin::Actions-->
+        <div class="card-toolbar">
+            <!--begin::Filters-->
+            <div class="d-flex flex-stack flex-wrap gap-4">
+                <!--begin::Destination-->
+                <div class="d-flex align-items-center fw-bold">
+                    <!--begin::Label-->
+                    @* <div class="text-muted fs-7 me-2">State</div>*@
+                    <!--end::Label-->
+                    <!--begin::Select-->
+                    @*<select class="form-select form-select-transparent text-gray-900 fs-7 lh-1 fw-bold py-0 ps-3 w-auto select2-hidden-accessible" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Select an option" data-select2-id="select2-data-16-niwu" tabindex="-1" aria-hidden="true" data-kt-initialized="1">
+                    <option></option>
+                    <option value="Show All" selected="" data-select2-id="select2-data-18-gfl7">Show All</option>
+                    <option value="1">Created</option>
+                    <option value="2">Department Review</option>
+                    <option value="3">SPS Review</option>
+                    <option value="4">Examiner Review</option>
+                    </select>*@
+                    <!--end::Select-->
+                </div>
+
+            </div>
+            <!--begin::Filters-->
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body">
+        <!--begin::Table-->
+        <div id="kt_table_widget_5_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered dt-responsive" id="_mysubmissionDatatable" width="100%" cellspacing="0">
+                    <!--begin::Table head-->
+                    <thead>
+                        <!--begin::Table row-->
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+
+                            <th>Submission #</th>
+                            <th>Title</th>
+                            <th>Transition State</th>
+                            <th>Date Submitted</th>
+                            <th>Last Modified</th>
+                            <th>AcademicYear</th>
+                            <th>Action</th>
+                        </tr>
+
+                        <!--end::Table row-->
+                    </thead>
+                    <!--end::Table head-->
+                    <!--begin::Table body-->
+                    <tbody class="fw-bold text-gray-600">
+                        @foreach (var data in Model)
+                        {
+                            <tr>
+                                <!--begin::Item-->
+                                <td>
+                                    # @data.Id
+                                </td>
+                                <!--end::Item-->
+                                <!--begin::Product ID-->
+                                <td>
+                                    @data.Title
+                                </td>
+                                <!--end::Product ID-->
+                                <!--begin::Date added-->
+                                <td>
+
+                                    @if (data.TransitionState == TransitionState.Created)
+                                    {
+                                        <span class="badge badge-light-primary fs-8 fw-bold my-2">Created</span>
+                                    }
+                                    @if (data.TransitionState == TransitionState.Department_Review)
+                                    {
+                                        <span class="badge badge-light-warning fs-8 fw-bold my-2">Department Review</span>
+                                    }
+
+                                    @if (data.TransitionState == TransitionState.SPS_Review)
+                                    {
+                                        <span class="badge badge-light-info fs-8 fw-bold my-2">SPS Review</span>
+                                    }
+
+                                    @if (data.TransitionState == TransitionState.Examiner_Review)
+                                    {
+                                        <span class="badge badge-light-secondary fs-8 fw-bold my-2">Examiner Review</span>
+                                    }
+
+
+                                </td>
+                                <!--end::Date added-->
+                                <!--begin::Price-->
+                                <td>
+                                    @data.SubmissionDate.ToString("MM/dd/yyyy")
+                                </td>
+                                <!--end::Price-->
+                                <!--begin::Status-->
+                                <td>
+                                    @data.SubmissionDate.ToString("MM/dd/yyyy")
+                                </td>
+                                <!--end::Status-->
+                                <!--begin::Qty-->
+                                <td>
+                                    @data.AcademicPeriod.AcademicYear <br>
+                                </td>
+
+                                <td>
+                                    <a asp-action="StudentSubmissionDetail" asp-controller="Submission" asp-route-id="@data.Id">View</a> |
+
+                                    @if (data.TransitionState == TransitionState.Created)
+                                    {
+                                        <a href="#">Delete</a>
+                                    }
+
+                                </td>
+                                <!--end::Qty-->
+                            </tr>
+                        }
+
+
+                    </tbody>
+                    <!--end::Table body-->
+                </table>
+            </div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"></div></div>
+        </div>
+        <!--end::Table-->
+    </div>
+    <!--end::Card body-->
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#_mysubmissionDatatable').DataTable({
+            searching: true,
+            ordering: true
+        });
+    });
+</script>

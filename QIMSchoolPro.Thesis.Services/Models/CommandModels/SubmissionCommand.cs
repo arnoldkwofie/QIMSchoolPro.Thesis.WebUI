@@ -8,9 +8,11 @@ namespace QIMSchoolPro.Thesis.Services.Models.CommandModels
         public string Title { get; set; }
         public string Abstract { get; set; }
         public IFormFile PrimaryFile { get; set; }
+        public IFormFile ThesisForm { get; set; }
         public IFormFile SecondaryFile { get; set; }
 
         public string PrimaryFilePath { get; set; }
+        public string ThesisFormPath { get; set; }
         public string SecondaryFilePath { get; set; }
     }
 
