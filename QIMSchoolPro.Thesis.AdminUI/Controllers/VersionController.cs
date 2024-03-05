@@ -43,6 +43,23 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
             
         }
 
-    
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+
+                var data = await _versionService.Delete(id);
+                return Json(data);
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(Response);
+            }
+
+        }
+
+
     }
 }

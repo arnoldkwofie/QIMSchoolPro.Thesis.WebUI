@@ -7,5 +7,6 @@ namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
     public interface IVersionService 
     {
         Task<RequestResponse> Create(VersionCommand payload);
+        Task<RequestResponse> Delete(int id);
     }
 }

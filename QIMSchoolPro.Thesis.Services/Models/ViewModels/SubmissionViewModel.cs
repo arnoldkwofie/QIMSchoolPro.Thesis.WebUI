@@ -12,6 +12,7 @@ namespace QIMSchoolPro.Thesis.Services.Models.ViewModels
         public string Title { get; set; }
         public string Abstract { get; set; }
         public TransitionState TransitionState { get; set; }
+       
         public DateTime SubmissionDate { get; set; }
         public AcademicPeriod AcademicPeriod { get; set; }
         public List<DocumentViewModel> Documents { get; set; }

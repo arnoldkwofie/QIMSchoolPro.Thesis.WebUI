@@ -19,12 +19,12 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             _httpAccessorService = httpRequestService;
         }
 
-        //public async Task<RequestResponse> Create(SubmissionCommand payload)
-        //{
-        //    return await _httpAccessorService
-        //        .PostRequestAsync(HttpUrlConstant.Create(_baseRoute), payload,
-        //        new CancellationToken());
-        //}
+        public async Task<RequestResponse> Delete(int id)
+        {
+            return await _httpAccessorService
+                .DeleteRequestAsync(HttpUrlConstant.Delete(_baseRoute, id),
+                new CancellationToken());
+        }
 
         public async Task<RequestResponse> Create(SubmissionCommand payload)
         {

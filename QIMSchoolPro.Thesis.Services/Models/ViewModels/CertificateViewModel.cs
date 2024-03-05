@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace QIMSchoolPro.Thesis.Services.Models.ViewModels
 {
-    public class ProgrammeViewModel
+    public class CertificateViewModel
     {
-        public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
-        public CertificateViewModel Certificate { get; set; }
-        public DepartmentViewModel Department { get; set; }
     }
 }

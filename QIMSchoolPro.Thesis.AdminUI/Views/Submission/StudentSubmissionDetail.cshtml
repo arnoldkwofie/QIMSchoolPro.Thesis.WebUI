@@ -146,7 +146,7 @@
                                                     {
                                                         <li>
                                                             <a href="/thesis/FileUpload/@version.Path"> <span><img src="/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @version.Name</span></a>
-                                                                <a href="#">Remove</a>
+                                                            <a href="#" class="del" id="del_@version.Id">Remove</a>
 
                                                             
 
@@ -408,6 +408,60 @@
             var id = parts[1]; 
             $('#doc_id').val(id);
         });
+
+
+        $('.del').click(function () {
+            var str = $(this).attr('id');
+            var parts = str.split('_');
+            var id = parts[1];
+            
+            Swal.fire({
+                text: 'Are you sure you want to delete this File',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#ff726f',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+            $.ajax({
+                url: $('#base_url').text() + '/Version/Delete' ,
+                type: 'post',
+                data: {'id' : id},
+                
+                success: function (response) {
+
+                    if (response) {
+                        
+                            swal({
+                                    title: "information",
+                                    icon: "warning",
+                                text: "File Deleted",
+                                    type: "warning"
+                            }).then(function () {
+                            window.location.reload();
+                            });
+
+                    } else {
+                        var errorMessage = response.message;
+                        if (!errorMessage)
+                            errorMessage = response.detailedMessage;
+
+                        showNotificationMessage("Error", errorMessage, "error");
+                    }
+                },
+                complete: function () {
+                    
+                },
+                error: errorResponse
+            });
+
+            }
+            });
+
+        });
+
 
 
 

@@ -6,12 +6,24 @@ $("#frmSubmission").submit(function (e) {
     
     e.preventDefault();
    
-	//var result = validateMarkEntry();
-	//if (result) {
-    PostMarksFilehandler('/Submission/Create', 'primaryFile','thesisForm', 'secondaryFile');
-	//}
+	var result = validateMarkEntry();
+    if (result) {
+        PostMarksFilehandler('/Submission/Create', 'primaryFile', 'thesisForm', 'secondaryFile');
+    } else {
+        showNotificationMessage("Add Submission", "Title is required", "error", "", "");
+    }
 });
 
+function validateMarkEntry()
+{
+    var title = $('#title').val();
+    if (title != "")
+    {
+        return true;
+    }
+    return false
+
+}
 
 
 function PostMarksFilehandler(route, primaryFileId, thesisFormId, secondaryFileId) {
@@ -84,7 +96,7 @@ function PostMarksFilehandler(route, primaryFileId, thesisFormId, secondaryFileI
                                         text: "Saved Successfully",
                                         type: "success"
                                     }).then(function () {
-                                        window.location ="https://localhost:7116/Submission/MySubmissions";
+                                        window.location = $('#base_url').text() + '/Submission/MySubmissions';
                                     });
 
                                 }

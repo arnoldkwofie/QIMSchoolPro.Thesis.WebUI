@@ -14,5 +14,7 @@
         public static string GetByStaffId(string route, string id) => $"{route}/GetByStaffId?id=" + id;
         public static string StaffLookup(string route, int id) => $"{route}/StaffLookup?id=" + id;
 
+        public static string Delete(string route, int id) => $"{route}/Delete/"+ id;
+
     }
 }

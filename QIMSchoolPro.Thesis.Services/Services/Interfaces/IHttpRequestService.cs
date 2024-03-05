@@ -10,5 +10,6 @@ namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
         Task<T> GetPostRequestAsync<T>(string path, object payload, CancellationToken cancellationToken);
         Task<RequestResponse> GetDeptReviewRequestAsync(string path, CancellationToken cancellationToken);
         Task<IAuthorityClaims> GetClaimsAsync();
+        Task<RequestResponse> DeleteRequestAsync(string path, CancellationToken cancellationToken);
     }
 }

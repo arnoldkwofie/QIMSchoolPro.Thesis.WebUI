@@ -27,6 +27,7 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
         }
 
 
+
         public async Task<IActionResult> SubmissionDetail(int id)
         {
             var data = await _submissionService.GetAsync(id);
@@ -97,7 +98,13 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
             var data = await _submissionService.GetUserSubmissions();
             return View(data);
         }
-        
+
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var data = await _submissionService.Delete(id);
+            return Ok(data);
+        }
         public async Task<IActionResult> AssignedSubmissions()
         {
             //var data = await _submissionService.GetUserSubmissions();

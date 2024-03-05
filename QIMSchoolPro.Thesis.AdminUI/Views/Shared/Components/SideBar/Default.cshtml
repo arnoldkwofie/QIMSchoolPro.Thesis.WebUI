@@ -1,4 +1,5 @@
-﻿@model QIMSchoolPro.Thesis.Services.Models.ViewModels.UserViewModel
+﻿@using QIMSchoolPro.Thesis.Services.Models.ViewModels;
+@model QIMSchoolPro.Thesis.Services.Models.ViewModels.UserViewModel
 
 
 <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle" style="background:#004c23">
@@ -7,9 +8,9 @@
 		<!--begin::User-->
 		<div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
 			<!--begin::Symbol-->
-			<div class="symbol symbol-50px">
+			@*<div class="symbol symbol-50px">
 				<img src="~/assets/media/avatars/user.jpg" alt="" />
-			</div>
+			</div>*@
 			<!--end::Symbol-->
 			<!--begin::Wrapper-->
 			<div class="aside-user-info flex-row-fluid flex-wrap ms-5">
@@ -18,7 +19,7 @@
 					<!--begin::Info-->
 					<div class="flex-grow-1 me-2">
 						<!--begin::Username-->
-						<a href="#" class="text-white text-hover-primary fs-6 fw-bold">@Model.FirstName @Model.LastName</a>
+						<a href="#" class="text-white text-hover-primary fs-6 fw-bold">Hi' @Model.FirstName @Model.LastName</a>
 						<!--end::Username-->
 						<!--begin::Description-->
 						@*<span class="text-gray-600 fw-bold d-block fs-8 mb-1">50012217322</span>*@
@@ -234,17 +235,21 @@
 			<!--begin::Menu-->
 			<div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
 
+				<div class="menu-item">
+					<!--begin:Menu link--><a class="menu-link" asp-action="Index" asp-controller="Home"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Dashboard</span></a><!--end:Menu link-->
+				</div>
 
-				@if (ViewBag.Role == "Students")
+				@if (User.IsInRole(RolesModel.Students))
 				{
 					<div class="menu-item">
-						<!--begin:Menu link--><a class="menu-link" asp-action="Index" asp-controller="Submission" ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">New Submissions</span></a><!--end:Menu link-->
+						<!--begin:Menu link--><a class="menu-link" asp-action="Index" asp-controller="Submission" ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">New Submission</span></a><!--end:Menu link-->
 					</div>
 					<div class="menu-item">
 						<!--begin:Menu link--><a class="menu-link" asp-action="MySubmissions" asp-controller="Submission" ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">My Submissions</span></a><!--end:Menu link-->
 					</div>
+
 				}
-				@if (ViewBag.Role == "TeachingStaff")
+				@if (User.IsInRole(RolesModel.TeachingStaff))
 				{
 					<div class="menu-item">
 						<!--begin:Menu link--><a class="menu-link" asp-action="AssignedSubmissions" asp-controller="Submission" ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Assigned Submissions</span></a><!--end:Menu link-->
@@ -253,20 +258,67 @@
 						<!--begin:Menu link--><a class="menu-link" asp-action="Index" asp-controller="Assessment"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Thesis Assessments</span></a><!--end:Menu link-->
 					</div>
 				}
-				@if (ViewBag.Role == "HOD")
+				@if (User.IsInRole(RolesModel.HOD))
 				{
 					<div class="menu-item">
 						<!--begin:Menu link--><a class="menu-link" asp-action="DepartmentReview" asp-controller="Submission" ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">DepartmentReview</span></a><!--end:Menu link-->
 					</div>
 				}
-				@if (ViewBag.Role == "SPS")
+				@if (User.IsInRole(RolesModel.SPS))
 				{
 					<div class="menu-item">
 						<!--begin:Menu link--><a class="menu-link" asp-action="SPSReview" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">SPS Review</span></a><!--end:Menu link-->
 					</div>
+
+
+					<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+						<!--begin:Menu link--><span class="menu-link"><span class="menu-icon"><i class="ki-duotone ki-address-book fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i></span><span class="menu-title">System Management</span><span class="menu-arrow"></span></span><!--end:Menu link--><!--begin:Menu sub-->
+						<div class="menu-sub menu-sub-accordion">
+							<!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/overview.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage Users</span></a><!--end:Menu link-->
+							</div>
+							<!--end:Menu item--><!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/projects.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage Announcements</span></a><!--end:Menu link-->
+							</div>
+							<!--end:Menu item--><!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/campaigns.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage Events</span></a><!--end:Menu link-->
+							</div>
+							<!--end:Menu item--><!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/documents.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Schdule Oral Examinantion</span></a><!--end:Menu link-->
+							</div>
+							<!--end:Menu item--><!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/documents.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage Extensions</span></a><!--end:Menu link-->
+							</div>
+							
+						</div>
+						<!--end:Menu sub-->
+					</div>
+
 				}
+
+				@if (User.IsInRole(RolesModel.HOD) || User.IsInRole(RolesModel.SPS) || User.IsInRole(RolesModel.TeachingStaff))
+				{
+					<div class="menu-item">
+						<!--begin:Menu link--><a class="menu-link" asp-action="DepartmentReview" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Processed review</span></a><!--end:Menu link-->
+					</div>
+				}
+
 				<div class="menu-item">
 					<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission" ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Reports</span></a><!--end:Menu link-->
+				</div>
+				<div class="menu-item">
+					<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Oral Examination</span></a><!--end:Menu link-->
+				</div>
+				<div class="menu-item">
+					<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Announcement</span></a><!--end:Menu link-->
+				</div>
+				<div class="menu-item">
+					<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Upcoming Events</span></a><!--end:Menu link-->
 				</div>
 
 				<div class="menu-item">
