@@ -126,11 +126,11 @@
                                 <td>
                                     @if (data.Student?.AcademicCycle == AcademicCycle.JanAdmission)
                                     {
-                                        <span>Jan Adm 2023</span>
+                                        <span>Jan Adm @data.Student?.YearGroup?.AdmittedYear</span>
                                     }
                                     @if (data.Student?.AcademicCycle == AcademicCycle.JulyAdmission)
                                     {
-                                        <span>July Adm 2023</span>
+                                        <span>July Adm @data.Student?.YearGroup?.AdmittedYear</span>
                                     }
                                    
                                 </td>

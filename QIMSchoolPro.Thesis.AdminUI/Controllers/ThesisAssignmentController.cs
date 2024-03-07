@@ -16,7 +16,7 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
         public async Task<IActionResult> AssignThesis(ThesisAssignmentCommand comand)
         {
 			var response = await _thesisAssignmentService.AssignThesis(comand);
-			return View();
+			return Ok(response);
         }
 
 

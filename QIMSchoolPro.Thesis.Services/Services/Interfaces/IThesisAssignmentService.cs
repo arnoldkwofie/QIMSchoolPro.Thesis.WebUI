@@ -8,8 +8,10 @@ namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
 {
     public interface IThesisAssignmentService 
     {
-		Task<List<ThesisAssignmentViewModel>> GetAssignmentByStaffId(string id);
+		Task<List<ThesisAssignmentViewModel>> GetAssignmentByStaffId();
+        Task<List<ThesisAssignmentViewModel>> GetApprovedAssignmentByStaffId();
         Task<RequestResponse> AssignThesis(ThesisAssignmentCommand payload);
+        Task<RequestResponse> Decide(DecisionCommand payload);
 
 
     }

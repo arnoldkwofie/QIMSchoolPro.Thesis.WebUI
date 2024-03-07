@@ -20,10 +20,18 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
         }
 
      
-        public async Task<List<ThesisAssignmentViewModel>> GetAssignmentByStaffId(string id)
+        public async Task<List<ThesisAssignmentViewModel>> GetAssignmentByStaffId()
         {
             var model = await _httpAccessorService
-                .GetRequestAsync<List<ThesisAssignmentViewModel>>(HttpUrlConstant.GetByStaffId(_baseRoute, id),
+                .GetRequestAsync<List<ThesisAssignmentViewModel>>(HttpUrlConstant.GetByStaffId(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<ThesisAssignmentViewModel>> GetApprovedAssignmentByStaffId()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<ThesisAssignmentViewModel>>(HttpUrlConstant.GetApprovedByStaffId(_baseRoute),
                 new CancellationToken());
             return model;
         }
@@ -36,6 +44,13 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
+        public async Task<RequestResponse> Decide(DecisionCommand payload)
+        {
+            var model = await _httpAccessorService
+                .PostRequestAsync(HttpUrlConstant.Decide(_baseRoute),  new { command=payload } ,
+                new CancellationToken());
+            return model;
+        }
 
 
     }

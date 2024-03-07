@@ -1,4 +1,5 @@
 ﻿@using QIMSchoolPro.Thesis.Services.Models.Enum;
+@using QIMSchoolPro.Thesis.Services.Models.ViewModels;
 @model QIMSchoolPro.Thesis.Services.Models.ViewModels.SubmissionViewModel
 
 
@@ -21,45 +22,80 @@
             <!--begin::Card header-->
             <div class="card-header pt-7">
                 <!--begin::Title-->
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold text-gray-900">Submission #@Model.Id</span>
-                    <span class="text-gray-500 mt-1 fw-semibold fs-6" id="title">@Model.Title</span>
-                </h3>
+              
                 <!--end::Title-->
                 <!--begin::Actions-->
                
 
-                <div class="d-flex justify-content-end">
-                    @if (Model.TransitionState == TransitionState.Department_Review)
-                    {
-                        <button type="reset" data-kt-contacts-type="cancel" id="reject" class="btn btn-danger me-3 btn-sm">
-                            Roll Back
-                        </button>
+               @* <div class="d-flex justify-content-end">*@
 
-                        <button type="submit" data-kt-contacts-type="submit" id="approve" class="btn btn-success btn-sm">
-                            Approve
-                        </button>
+                    <div class="row">
+                    @if (Model.TransitionState == TransitionState.Department_Review && User.IsInRole(RolesModel.HOD))
+                    {
+                        <div class="col-md-6">
+                            <button type="reset"  id="reject" class="btn btn-danger btn-sm">
+                                Roll Back
+                            </button>
+                        </div>
+
+                        <div class="col-md-6">
+                            <button type="submit"  id="approve" class="btn btn-success btn-sm">
+                                Approve
+                            </button>
+                        </div>
                     }
 
-                    @if (Model.TransitionState == TransitionState.SPS_Review)
+                    @if (Model.TransitionState == TransitionState.SPS_Review && User.IsInRole(RolesModel.SPS))
                     {
-                        @Html.DropDownList("Id", (IEnumerable<SelectListItem>)ViewBag.StaffLookup, new { @class = "form-control", @id="staffId", @style = "width:100%" })
+                        <div class="col-md-3">
+                            <label>Select Examiner</label>
+                        @Html.DropDownList("Id", (IEnumerable<SelectListItem>)ViewBag.StaffLookup, new { @class = "form-control  form-select",  @id="staffId", @style = "width:100%" , data_control = "select2"})
+                         </div>
 
-                        <select class="form-control">
-                            <option>First Internal Examiner</option>
-                            <option>Second Internal Examiner</option>
-                            <option>External Examiner</option>
+                            <div class="col-md-3">
+                            <label>Select Examiner Type</label>
+                        <select class="form-control" id="reviewerType">
+                            <option></option>
+                            <option value="1">First Internal Examiner</option>
+                            <option value="2">Second Internal Examiner</option>
+                            <option value="3">External Examiner</option>
                         </select>
+                            </div>
 
+                                <div class="col-md-3">
+                            <label>Choose Due Date</label>
+                        <input class="form-control" type="date" id="due_date" placeholder="Due date" />
+                            </div>
+
+                                    <div class="col-md-3">
+                            <br>
                         <button type="submit" data-kt-contacts-type="submit" id="assign" class="btn btn-success btn-sm">
                             Assign
                         </button>
+                            </div>
                     }
-                  
-                    
-                </div>
+                    @if (Model.TransitionState == TransitionState.Examiner_Review && User.IsInRole(RolesModel.TeachingStaff))
+                    {
+                        <input type="hidden" id="assignId" value="@ViewBag.AssignId" />
+                        <div class="col-md-6">
+                        <button type="reset"  id="t_reject" class="btn btn-danger  btn-sm">
+                           Reject
+                        </button>
+                        </div>
 
+                            <div class="col-md-6">
+                        <button type="submit"  id="t_approve" class="btn btn-success btn-sm">
+                            Approve
+                        </button>
+                        </div>
+                    }
+                    </div>
+               @* </div>*@
 
+                <h3 class="card-title">
+                    <span class="card-label fw-bold text-gray-900">Submission #@Model.Id</span><br />
+                    <span class="text-gray-500 mt-1 fw-semibold fs-6" id="title">@Model.Title</span>
+                </h3>
                 <!--end::Actions-->
             </div>
             <!--end::Card header-->
@@ -124,7 +160,7 @@
                                             {
                                                
                                                                 <li>
-                                                    <a href="/thesis/FileUpload/@document.Versions.LastOrDefault().Path"> <span><img src="/thesis/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @document.Versions.LastOrDefault().Name</span></a>
+                                                    <a href="/FileUpload/@document.Versions.LastOrDefault().Path"> <span><img src="/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @document.Versions.LastOrDefault().Name</span></a>
 
                                                                 </li>
 
@@ -353,6 +389,114 @@
 
 
 
+        $('#t_approve').click(function () {
+
+            var data = {
+
+                'id': $('#assignId').val(),
+                'decision': 1
+                
+            };
+
+            Swal.fire({
+                text: 'Are you sure you want to approve this report?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#ff726f',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: $('#base_url').text() + '/ExaminerReview/Decide',
+                        data: data,
+                        success: function (response) {
+
+                            if (response.isComplete) {
+                                swal({
+                                    title: "Success",
+                                    icon: "success",
+                                    text: response.message,
+                                    type: "success"
+                                }).then(function () {
+
+                                });
+
+                            } else {
+                                var errorMessage = response.message;
+                                if (!errorMessage)
+                                    errorMessage = response.detailedMessage;
+
+                                showNotificationMessage("Error", errorMessage, "error");
+                            }
+                        },
+                        error: function (response) {
+
+
+                        },
+                    });
+                }
+                return false;
+            })
+
+        });
+
+
+        $('#t_reject').click(function () {
+
+            var data = {
+
+                'id': $('#assignId').val(),
+                'decision': 2
+
+            };
+
+            Swal.fire({
+                text: 'Are you sure you want to approve this report?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#ff726f',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: $('#base_url').text() + '/ExaminerReview/Decide',
+                        data: data,
+                            success: function (response) {
+
+                            if (response.isComplete) {
+                                swal({
+                                    title: "Success",
+                                    icon: "success",
+                                    text: response.message,
+                                    type: "success"
+                                }).then(function () {
+
+                                });
+
+                            } else {
+                                var errorMessage = response.message;
+                                if (!errorMessage)
+                                    errorMessage = response.detailedMessage;
+
+                                showNotificationMessage("Error", errorMessage, "error");
+                            }
+                        },
+                        error: function (response) {
+
+
+                        },
+                    });
+                }
+                return false;
+            })
+
+
+
+        });
 
 
 
@@ -459,11 +603,13 @@
 
         $('#assign').click(function () {
 
-            alert(1);
+           
             var data = {
                
                 'submissionId': @Model.Id,
-                'staffId': $('#staffId').val()
+                'staffId': $('#staffId').val(),
+                'reviewerType': $('#reviewerType').val(),
+                'deadline': $('#due_date').val()
             };
 
         console.log(data)

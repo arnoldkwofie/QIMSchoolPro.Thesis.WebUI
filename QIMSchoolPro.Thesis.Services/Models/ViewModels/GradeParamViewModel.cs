@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace QIMSchoolPro.Thesis.Services.Models.ViewModels
 {
-    public class GradeParamViewModel
+    public class DepartmentViewModel
     {
         public int Id { get; set; }
-        public int Order { get; set; }
-        public string Section { get; set; }
-        public Decimal MaxMarks { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -22,14 +22,15 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
 
 		public async Task<IActionResult> Index()
         {
-			var data = await _thesisAssignmentService.GetAssignmentByStaffId("admin@localhost");
+			//var data = await _thesisAssignmentService.GetAssignmentByStaffId("admin@localhost");
 			return View();
         }
 
 
 
-        public async Task<IActionResult> SubmissionDetail(int id)
+        public async Task<IActionResult> SubmissionDetail(int id, int assignId)
         {
+            ViewBag.AssignId = assignId;
             var data = await _submissionService.GetAsync(id);
 
             var staffLookup = await _staffService.StaffLookup(id);
@@ -107,10 +108,12 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
         }
         public async Task<IActionResult> AssignedSubmissions()
         {
-            //var data = await _submissionService.GetUserSubmissions();
-            //return View(data);
-            return View();
+            var data = await _thesisAssignmentService.GetAssignmentByStaffId();
+            return View(data);
+           
         }
+
+       
 
         public async Task<IActionResult> StudentSubmissionDetail(int id)
         {

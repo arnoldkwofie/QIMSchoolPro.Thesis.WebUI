@@ -13,7 +13,8 @@ namespace QIMSchoolPro.Thesis.Services.Models.ViewModels
 			public int SubmissionId { get; set; }
 			public SubmissionViewModel Submission { get; set; }
 			public int StaffId { get; set; }
-			public bool Accepted { get; set; }
+			public int Decision { get; set; }
+			public DateTime Deadline { get; set; }
 
 		
 	}

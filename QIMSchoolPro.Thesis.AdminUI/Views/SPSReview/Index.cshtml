@@ -66,11 +66,10 @@
                             <th>Name</th>
                             <th>Programe</th>
                             <th>Department</th>
-                           
-                            <th>Transition State</th>
                             <th>Date Created</th>
                             <th>Last Modified</th>
                             <th>AcademicYear</th>
+                            <th>Cycle</th>
                             <th>Action</th>
                         </tr>
 
@@ -93,14 +92,14 @@
                                     @data.Student?.Party?.Name?.FirstName  @data.Student?.Party?.Name?.LastName
                                 </td>
                                 <td>
-                                    @data.Student?.Programme?.Name
+                                    @data.Student?.Programme?.Certificate?.Code @data.Student?.Programme?.Name
                                 </td>
                                 <td>
                                     @data.Student?.Programme?.Department.Name
                                 </td>
                                
 
-                                <td>
+                              @*  <td>
 
                                     @if (data.TransitionState == TransitionState.Created)
                                     {
@@ -122,7 +121,7 @@
                                     }
 
 
-                                </td>
+                                </td>*@
                                 <!--end::Date added-->
                                 <!--begin::Price-->
                                 <td>
@@ -138,9 +137,20 @@
                                 <td>
                                     @data.AcademicPeriod.AcademicYear <br>
                                 </td>
+                                <td>
+                                    @if (data.Student?.AcademicCycle == AcademicCycle.JanAdmission)
+                                    {
+                                        <span>Jan Adm @data.Student?.YearGroup?.AdmittedYear</span>
+                                    }
+                                    @if (data.Student?.AcademicCycle == AcademicCycle.JulyAdmission)
+                                    {
+                                        <span>July Adm @data.Student?.YearGroup?.AdmittedYear</span>
+                                    }
+
+                                </td>
 
                                 <td>
-                                    <a asp-action="SubmissionDetail" asp-controller="Submission" asp-route-id="@data.Id">View</a> |
+                                    <a asp-action="SubmissionDetail" asp-controller="Submission" asp-route-id="@data.Id">View</a> 
                                    
                                 </td>
                                 <!--end::Qty-->
