@@ -5,6 +5,7 @@
         public static string Create(string route) => $"{route}/Create";
         public static string Decide(string route) => $"{route}/Decide";
         public static string PostSubmission(string route) => $"{route}/PostSubmission";
+        public static string SaveGrade(string route) => $"{route}/SaveGrade";
         public static string GetUserSubmissions(string route) => $"{route}/GetUserSubmissions";
         public static string GetDepartmentSubmissions(string route) => $"{route}/GetDepartmentSubmissions";
         public static string GetSPSSubmissions(string route) => $"{route}/GetSPSSubmissions";

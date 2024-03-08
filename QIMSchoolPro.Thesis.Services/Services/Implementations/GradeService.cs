@@ -28,6 +28,14 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
+        public async Task<RequestResponse> SaveGrade(List<GradeCommand> payload)
+        {
+            var model = await _httpAccessorService
+                .PostRequestAsync(HttpUrlConstant.SaveGrade(_baseRoute), new { payload },
+                new CancellationToken());
+            return model;
+        }
+
 
 
     }
