@@ -17,13 +17,29 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
         {
             _baseRoute = $"{configuration["ApplicationService:Master:BaseUrl"]}ThesisAssignment";
             _httpAccessorService = httpRequestService;
-        }
+        }   
 
      
         public async Task<List<ThesisAssignmentViewModel>> GetAssignmentByStaffId()
         {
             var model = await _httpAccessorService
                 .GetRequestAsync<List<ThesisAssignmentViewModel>>(HttpUrlConstant.GetByStaffId(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<ThesisAssignmentViewModel>> GetAssignmentBySubmissionId(int id)
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<ThesisAssignmentViewModel>>(HttpUrlConstant.GetBySubmissionId(_baseRoute, id),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<ThesisAssignmentViewModel>> ExaminerProcessedReviews()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<ThesisAssignmentViewModel>>(HttpUrlConstant.ExaminerProcessedReviews(_baseRoute),
                 new CancellationToken());
             return model;
         }

@@ -12,6 +12,8 @@ namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
         Task<List<ThesisAssignmentViewModel>> GetApprovedAssignmentByStaffId();
         Task<RequestResponse> AssignThesis(ThesisAssignmentCommand payload);
         Task<RequestResponse> Decide(DecisionCommand payload);
+        Task<List<ThesisAssignmentViewModel>> ExaminerProcessedReviews();
+        Task<List<ThesisAssignmentViewModel>> GetAssignmentBySubmissionId(int id);
 
 
     }

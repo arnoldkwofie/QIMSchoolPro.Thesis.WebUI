@@ -1,0 +1,142 @@
+﻿@using QIMSchoolPro.Thesis.Services.Models.Enum;
+@model IEnumerable<QIMSchoolPro.Thesis.Services.Models.ViewModels.SubmissionViewModel>
+
+
+
+
+
+<div class="card card-flush h-xl-100">
+    <div class="card-header pt-7">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bold text-gray-900">Processed Reviews</span>
+        </h3>
+        
+        <div class="card-toolbar">
+            <div class="d-flex flex-stack flex-wrap gap-4">
+                <div class="d-flex align-items-center fw-bold">
+
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="card-body">
+
+            <div class="mb-17 ">
+                
+        @foreach(var data in Model)
+        {
+                <div class="m-0">
+                    <!--begin::Heading-->
+                    <div class=" align-items-center collapsible py-3 toggle mb-0 collapsed" data-bs-toggle="collapse" data-bs-target="#kt_job_@data.Id" aria-expanded="false">
+                        <!--begin::Icon-->
+                        <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                            <i class="ki-duotone ki-minus-square toggle-on text-primary fs-1"><span class="path1"></span><span class="path2"></span></i>
+                            <i class="ki-duotone ki-plus-square toggle-off fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                        </div>
+                        <!--end::Icon-->
+                        <!--begin::Title-->
+                        <div class="row text-gray-700 fw-bold">
+                            <div class="col-md-3">
+                             # @data.Id
+                            </div>
+                            <div class="col-md-3">
+                                @data.StudentNumber
+                            </div>
+                            <div class="col-md-3">
+                                @data?.Student?.Party?.Name?.FirstName @data?.Student?.Party?.Name?.LastName
+                            </div>
+                            <div class="col-md-3">
+                                @data?.Student?.Programme?.Name
+                            </div>
+                        </div>
+                        
+                        <!--end::Title-->
+                    </div>
+
+                    <div id="kt_job_@data.Id" class="fs-6 ms-1 collapse" style="">
+                        <div class="container">
+
+                            <table class="table table-striped table-bordered dt-responsive" id="_mysubmissionDatatable" width="100%" cellspacing="0">
+                                <tbody class="fw-bold text-gray-600">
+                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+
+                                        
+                                        <th>Examiner</th>
+                                        <th>Decision</th>
+                                        <th>Assessment</th>
+                                        <th>Deadline</th>
+                                        <th>Action</th>
+                                      
+                                    </tr>
+                                    @foreach (var subdata in data?.ThesisAssignments)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @subdata?.Staff?.Party?.Name?.FirstName @subdata?.Staff?.Party?.Name?.LastName
+                                            </td>
+                                            <td>
+                                                @if (subdata.Decision == 1)
+                                                {
+                                                    <span>Accepted</span>
+                                                }
+                                                else if (subdata.Decision == 2)
+                                                {
+                                                    <span>Rejected</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>No decision yet</span>
+                                                }
+
+                                            </td>
+                                            <td>
+                                                @if (subdata.Assessment)
+                                                {
+                                                    <span class="badge badge-light-success fs-8 fw-bold my-2">Scored</span>
+                                                }
+                                                else
+                                                {
+
+                                                    <span class="badge badge-light-danger fs-8 fw-bold my-2">N/A</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @subdata.Deadline
+                                            </td>
+                                            <td>
+                                                @if (subdata.Decision == 2)
+                                                {
+                                                   <a asp-action="SubmissionDetail" asp-controller="Submission" asp-route-id="@data.Id">re-assign</a>
+                                                }
+                                                @if (subdata.Assessment)
+                                                {
+                                                    <a href="#">View Report</a>
+                                                }
+                                                
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                       
+                    </div>
+                    <!--end::Content-->
+                    <!--begin::Separator-->
+                    <div class="separator separator-dashed"></div>
+                    <!--end::Separator-->
+                </div>
+            }
+
+            </div>
+    </div>
+</div>
+
+
+
+
+
+
+

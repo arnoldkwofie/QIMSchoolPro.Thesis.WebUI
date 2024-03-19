@@ -14,11 +14,16 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
             _staffService = staffService;
 
         }
-        public async Task<IActionResult> Index(int Id)
+        public async Task<IActionResult> Index()
         {
             var data = await _submissionService.GetSPSSubmissions();
-
             
+            return View(data);
+        }
+
+        public async Task<IActionResult> ProcessedReviews()
+        {
+            var data = await _submissionService.SPSProcessedReviews();
             return View(data);
         }
 

@@ -42,6 +42,25 @@
             </a>
             <!--end::Statistics Widget 5-->
         </div>
+
+        <div class="col-xl-4">
+            <!--begin::Statistics Widget 5-->
+            <a asp-action="StudentReportSubmissions" asp-controller="Submission" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-collection-fill" viewBox="0 0 16 16">
+                            <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Reports</div>
+                    <div class="fw-bold text-gray-400">View assessment reports</div>
+                </div>
+                <!--end::Body-->
+            </a>
+            <!--end::Statistics Widget 5-->
+        </div>
         }
 
 
@@ -84,6 +103,42 @@
         </a>
         <!--end::Statistics Widget 5-->
     </div>
+        <div class="col-xl-4">
+            <!--begin::Statistics Widget 5-->
+            <a asp-action="ProcessedReviews" asp-controller="ExaminerReview" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-collection-fill" viewBox="0 0 16 16">
+                            <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Processed reviews</div>
+                    <div class="fw-bold text-gray-400">View Processed Reviews</div>
+                </div>
+                <!--end::Body-->
+            </a>
+            <!--end::Statistics Widget 5-->
+        </div>
+        <div class="col-xl-4">
+            <!--begin::Statistics Widget 5-->
+            <a asp-action="ReviewerReportSubmissions" asp-controller="Submission" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-collection-fill" viewBox="0 0 16 16">
+                            <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Reports</div>
+                    <div class="fw-bold text-gray-400">View assessment reports</div>
+                </div>
+                <!--end::Body-->
+            </a>
+            <!--end::Statistics Widget 5-->
+        </div>
     }
  
     @if (User.IsInRole(RolesModel.HOD))
@@ -101,6 +156,42 @@
                     <!--end::Svg Icon-->
                     <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Department Review</div>
                     <div class="fw-bold text-gray-400"> Pending Approvals</div>
+                </div>
+                <!--end::Body-->
+            </a>
+            <!--end::Statistics Widget 5-->
+        </div>
+        <div class="col-xl-4">
+            <!--begin::Statistics Widget 5-->
+            <a asp-action="ProcessedReviews" asp-controller="DepartmentReview" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-collection-fill" viewBox="0 0 16 16">
+                            <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Processed reviews</div>
+                    <div class="fw-bold text-gray-400">View Processed Reviews</div>
+                </div>
+                <!--end::Body-->
+            </a>
+            <!--end::Statistics Widget 5-->
+        </div>
+        <div class="col-xl-4">
+            <!--begin::Statistics Widget 5-->
+            <a asp-action="DepartmentReportSubmissions" asp-controller="Submission" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-collection-fill" viewBox="0 0 16 16">
+                            <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Reports</div>
+                    <div class="fw-bold text-gray-400">View assessment reports</div>
                 </div>
                 <!--end::Body-->
             </a>
@@ -129,13 +220,9 @@
         <!--end::Statistics Widget 5-->
     </div>
 
-    }
-
-    @if (User.IsInRole(RolesModel.HOD) || User.IsInRole(RolesModel.SPS) || User.IsInRole(RolesModel.TeachingStaff))
-    {
         <div class="col-xl-4">
             <!--begin::Statistics Widget 5-->
-            <a asp-action="Reports" asp-controller="Submission" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
+            <a asp-action="ProcessedReviews" asp-controller="SPSReview" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
                 <!--begin::Body-->
                 <div class="card-body">
                     <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
@@ -151,26 +238,31 @@
             </a>
             <!--end::Statistics Widget 5-->
         </div>
+
+        <div class="col-xl-4">
+            <!--begin::Statistics Widget 5-->
+            <a asp-action="ReportSubmissions" asp-controller="Submission" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-collection-fill" viewBox="0 0 16 16">
+                            <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Reports</div>
+                    <div class="fw-bold text-gray-400">View assessment reports</div>
+                </div>
+                <!--end::Body-->
+            </a>
+            <!--end::Statistics Widget 5-->
+        </div>
+
     }
 
-     <div class="col-xl-4">
-        <!--begin::Statistics Widget 5-->
-        <a asp-action="Reports" asp-controller="Submission" class="card bg-body-white hoverable bg-hover-light-dark card-xl-stretch mb-xl-8 menu-card">
-        <!--begin::Body-->
-        <div class="card-body">
-        <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-collection-fill" viewBox="0 0 16 16">
-        <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
-        </svg>
-        </span>
-        <!--end::Svg Icon-->
-        <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Reports</div>
-        <div class="fw-bold text-gray-400">View assessment reports</div>
-        </div>
-        <!--end::Body-->
-        </a>
-        <!--end::Statistics Widget 5-->
-    </div>
+  
+
+   
 
  </div>
 

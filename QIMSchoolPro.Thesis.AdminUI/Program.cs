@@ -1,4 +1,5 @@
 using QIMSchoolPro.Thesis.Services.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +8,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpRequestService();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
+//builder.Services.AddMvc()
+//                .AddJsonOptions(options =>
+//                {
+//                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+//                    // Add any other options as needed
+//                });
+builder.Services.AddControllers()
+          .AddJsonOptions(options =>
+          {
+              options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+          });
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

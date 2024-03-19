@@ -12,6 +12,16 @@ $("#frmUpload").submit(function (e) {
 	//}
 });
 
+$("#frmReport").submit(function (e) {
+
+    e.preventDefault();
+
+    //var result = validateMarkEntry();
+    //if (result) {
+    UploadFile('/Grade/UploadReport', 'fileId');
+    //}
+});
+
 
 function UploadFile(route, fileId) {
    

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QIMSchoolPro.Thesis.Services.Models.CommandModels;
+using QIMSchoolPro.Thesis.Services.Models.ViewModels;
 using QIMSchoolPro.Thesis.Services.Services.Interfaces;
 using QIMSchoolPro.Thesis.WebUI.Services.Implementations;
 using System.Net;
@@ -43,6 +44,12 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
             });
 
             return View(data);
+        }
+
+        public async Task<IActionResult> SubmissionDecision(DecisionCommand command)
+        {
+            var data = await _submissionService.Decide(command);
+            return Ok(data);
         }
 
 
@@ -93,6 +100,47 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
         }
 
 
+        public async Task<IActionResult> ReportSubmissions()
+        {
+            var data = await _submissionService.GetReportSubmissions();
+            return View(data);
+        }
+
+        public async Task<IActionResult> StudentReportSubmissions()
+        {
+            var data = await _submissionService.GetStudentReportSubmissions();
+            return View(data);
+        }
+
+        public async Task<IActionResult> DepartmentReportSubmissions()
+        {
+            var data = await _submissionService.GetDepartmentReportSubmissions();
+            return View(data);
+        }
+
+        public async Task<IActionResult> ReviewerReportSubmissions()
+        {
+            var data = await _submissionService.GetReviewerReportSubmissions();
+            return View(data);
+        }
+        public async Task<IActionResult> ReportDetails(int id)
+        {
+            var staffLookup = await _staffService.StaffLookup(id);
+            ViewBag.StaffLookup = staffLookup.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
+
+            
+            var report = await _thesisAssignmentService.GetAssignmentBySubmissionId(id);
+            var data = await _submissionService.GetAsync(id);
+            ReportDetail BigData = new ReportDetail();
+            BigData.Submission = data;
+            BigData.ThesisAssignments = report;
+
+            return View(BigData);
+        }
 
         public async Task<IActionResult> MySubmissions()
         {
@@ -106,6 +154,7 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
             var data = await _submissionService.Delete(id);
             return Ok(data);
         }
+
         public async Task<IActionResult> AssignedSubmissions()
         {
             var data = await _thesisAssignmentService.GetAssignmentByStaffId();
@@ -125,6 +174,12 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
         public async Task<IActionResult> PostSubmission(PostSubmission command)
         {
             var data = await _submissionService.PostSubmission(command);
+            return Json(data);
+        }
+
+        public async Task<IActionResult> Publish(PublishCommand command)
+        {
+            var data = await _submissionService.Publish(command);
             return Json(data);
         }
 

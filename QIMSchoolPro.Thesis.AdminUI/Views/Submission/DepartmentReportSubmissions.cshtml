@@ -1,0 +1,147 @@
+﻿@using QIMSchoolPro.Thesis.Services.Models.Enum;
+@model IEnumerable<QIMSchoolPro.Thesis.Services.Models.ViewModels.SubmissionViewModel>
+
+
+
+
+
+
+
+<div class="card card-flush h-xl-100">
+    <!--begin::Card header-->
+    <div class="card-header pt-7">
+        <!--begin::Title-->
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bold text-gray-900">Reports</span>
+            @* <span class="text-gray-500 mt-1 fw-semibold fs-6">View All Submissions</span>*@
+        </h3>
+        <!--end::Title-->
+        <!--begin::Actions-->
+        <div class="card-toolbar">
+            <!--begin::Filters-->
+            <div class="d-flex flex-stack flex-wrap gap-4">
+                <!--begin::Destination-->
+                <div class="d-flex align-items-center fw-bold">
+                </div>
+
+            </div>
+            <!--begin::Filters-->
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body">
+        <!--begin::Table-->
+        <div id="kt_table_widget_5_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered dt-responsive" id="_mysubmissionDatatable" width="100%" cellspacing="0">
+                    <!--begin::Table head-->
+                    <thead>
+                        <!--begin::Table row-->
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+
+                            <th>Submission #</th>
+                            <th>StudentId</th>
+                            <th>Name</th>
+                            <th>Programe</th>
+                            <th>Decision</th>
+                            <th>AcademicYear</th>
+                            <th>Cycle</th>
+                            <th>Trip</th>
+                            <th>Details</th>
+                        </tr>
+
+                        <!--end::Table row-->
+                    </thead>
+                    <!--end::Table head-->
+                    <!--begin::Table body-->
+                    <tbody class="fw-bold text-gray-600">
+                        @foreach (var data in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    # @data.Id
+                                </td>
+                                <td>
+                                    @data.StudentNumber
+                                </td>
+                                <td>
+                                    @data.Student?.Party?.Name?.FirstName  @data.Student?.Party?.Name?.LastName
+                                </td>
+                                <td>
+                                    @data.Student?.Programme?.Certificate?.Code @data.Student?.Programme?.Name
+                                </td>
+                                <td>
+                                    @if (data.DecisionState == DecisionState.Approve)
+                                    {
+                                        <span class="badge badge-light-success fs-8 fw-bold my-2">Pass</span>
+                                    }
+                                    @if (data.DecisionState == DecisionState.Reject)
+                                    {
+                                        <span class="badge badge-light-danger fs-8 fw-bold my-2">Rejected</span>
+                                    }
+
+                                </td>
+                                <td>
+                                    @data.AcademicPeriod.AcademicYear <br>
+                                </td>
+                                <td>
+                                    @if (data.Student?.AcademicCycle == AcademicCycle.JanAdmission)
+                                    {
+                                        <span>Jan Adm @data.Student?.YearGroup?.AdmittedYear</span>
+                                    }
+                                    @if (data.Student?.AcademicCycle == AcademicCycle.JulyAdmission)
+                                    {
+                                        <span>July Adm @data.Student?.YearGroup?.AdmittedYear</span>
+                                    }
+
+                                </td>
+                                <td>
+                                    @data.Trip
+                                </td>
+
+                                <td>
+                                    <a asp-action="ReportDetails" asp-controller="Submission" asp-route-id="@data.Id">View</a>
+
+                                </td>
+                                <!--end::Qty-->
+                            </tr>
+                        }
+
+
+                    </tbody>
+                    <!--end::Table body-->
+                </table>
+            </div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"></div></div>
+        </div>
+        <!--end::Table-->
+    </div>
+    <!--end::Card body-->
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#_mysubmissionDatatable').DataTable({
+            searching: true,
+            ordering: true
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+

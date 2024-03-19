@@ -12,4 +12,6 @@ namespace QIMSchoolPro.Thesis.Services.Models.CommandModels
         public int Decision { get; set; }
       
     }
+
+   
 }

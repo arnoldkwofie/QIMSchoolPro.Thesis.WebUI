@@ -84,6 +84,54 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
+        public async Task<List<SubmissionViewModel>> DepartmentProcessedReviews()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.DepartmentProcessedReviews(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<SubmissionViewModel>> SPSProcessedReviews()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.SPSProcessedReviews(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<SubmissionViewModel>> GetReportSubmissions()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.GetReportSubmissions(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<SubmissionViewModel>> GetStudentReportSubmissions()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.GetStudentReportSubmissions(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<SubmissionViewModel>> GetDepartmentReportSubmissions()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.GetDepartmentReportSubmissions(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<List<ThesisAssignmentViewModel>> GetReviewerReportSubmissions()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<ThesisAssignmentViewModel>>(HttpUrlConstant.GetReviewerReportSubmissions(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
+
         public async Task<List<SubmissionViewModel>> GetSPSSubmissions()
         {
             var model = await _httpAccessorService
@@ -108,10 +156,27 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
+      
+
         public async Task<RequestResponse> PostSubmission(PostSubmission payload)
         {
             var model = await _httpAccessorService
                 .PostRequestAsync(HttpUrlConstant.PostSubmission(_baseRoute), new { payload },
+                new CancellationToken());
+            return model;
+        }
+
+        public async Task<RequestResponse> Publish(PublishCommand payload)
+        {
+            var model = await _httpAccessorService
+                .PostRequestAsync(HttpUrlConstant.Publish(_baseRoute), payload ,
+                new CancellationToken());
+            return model;
+        }
+        public async Task<RequestResponse> Decide(DecisionCommand payload)
+        {
+            var model = await _httpAccessorService
+                .PostRequestAsync(HttpUrlConstant.Decide(_baseRoute),  payload ,
                 new CancellationToken());
             return model;
         }

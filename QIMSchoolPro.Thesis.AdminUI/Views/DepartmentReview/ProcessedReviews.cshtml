@@ -1,12 +1,11 @@
 ﻿@using QIMSchoolPro.Thesis.Services.Models.Enum;
-@model IEnumerable<QIMSchoolPro.Thesis.Services.Models.ViewModels.ThesisAssignmentViewModel>
-
+@model IEnumerable<QIMSchoolPro.Thesis.Services.Models.ViewModels.SubmissionViewModel>
 <div class="card card-flush h-xl-100">
     <!--begin::Card header-->
     <div class="card-header pt-7">
         <!--begin::Title-->
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bold text-gray-900">Examiner's Assignments</span>
+            <span class="card-label fw-bold text-gray-900">Processed Reviews</span>
             @* <span class="text-gray-500 mt-1 fw-semibold fs-6">View All Submissions</span>*@
         </h3>
         <!--end::Title-->
@@ -51,11 +50,11 @@
                             <th>Submission #</th>
                             <th>StudentId</th>
                             <th>Name</th>
-                            <th>Programe</th>
-                            <th>Department</th>
+                            <th>Programme</th>
+                            <th>Title</th>
+                            <th>Transition</th>
                             <th>Date Created</th>
                             <th>Last Modified</th>
-                            <th>DeadLine</th>
                             <th>AcademicYear</th>
                             <th>Cycle</th>
                             <th>Action</th>
@@ -71,23 +70,24 @@
                             <tr>
 
                                 <td>
-                                    # @data?.Submission?.Id
+                                    # @data.Id
                                 </td>
                                 <td>
-                                    @data.Submission?.StudentNumber
+                                    @data.StudentNumber
                                 </td>
                                 <td>
-                                    @data.Submission?.Student?.Party?.Name?.FirstName  @data.Submission?.Student?.Party?.Name?.LastName
+                                    @data.Student?.Party?.Name?.FirstName  @data.Student?.Party?.Name?.LastName
                                 </td>
                                 <td>
-                                    @data.Submission?.Student?.Programme?.Certificate?.Code @data.Submission?.Student?.Programme?.Name
+
+                                    @data.Student?.Programme?.Certificate?.Code  @data.Student?.Programme?.Name
                                 </td>
                                 <td>
-                                    @data.Submission?.Student?.Programme?.Department.Name
+                                    @data.Title
                                 </td>
 
 
-                                @*  <td>
+                                  <td>
 
                             @if (data.TransitionState == TransitionState.Created)
                             {
@@ -109,39 +109,36 @@
                             }
 
 
-                            </td>*@
+                            </td>
                                 <!--end::Date added-->
                                 <!--begin::Price-->
                                 <td>
-                                    @data.Submission?.SubmissionDate.ToString("MM/dd/yyyy")
+                                    @data.SubmissionDate.ToString("MM/dd/yyyy")
                                 </td>
                                 <!--end::Price-->
                                 <!--begin::Status-->
                                 <td>
-                                    @data.Submission?.SubmissionDate.ToString("MM/dd/yyyy")
-                                </td>
-                                <td>
-                                    @data.Deadline.ToString("MM/dd/yyyy")
+                                    @data.SubmissionDate.ToString("MM/dd/yyyy")
                                 </td>
                                 <!--end::Status-->
                                 <!--begin::Qty-->
                                 <td>
-                                    @data.Submission?.AcademicPeriod.AcademicYear <br>
+                                    @data.AcademicPeriod.AcademicYear <br>
                                 </td>
                                 <td>
-                                    @if (data.Submission?.Student?.AcademicCycle == AcademicCycle.JanAdmission)
+                                    @if (data.Student?.AcademicCycle == AcademicCycle.JanAdmission)
                                     {
-                                        <span>Jan Adm @data.Submission?.Student?.YearGroup?.AdmittedYear</span>
+                                        <span>Jan Adm @data.Student?.YearGroup?.AdmittedYear</span>
                                     }
-                                    @if (data.Submission?.Student?.AcademicCycle == AcademicCycle.JulyAdmission)
+                                    @if (data.Student?.AcademicCycle == AcademicCycle.JulyAdmission)
                                     {
-                                        <span>July Adm @data.Submission?.Student?.YearGroup?.AdmittedYear</span>
+                                        <span>July Adm @data.Student?.YearGroup?.AdmittedYear</span>
                                     }
 
                                 </td>
 
                                 <td>
-                                    <a asp-action="SubmissionDetail" asp-controller="Submission" asp-route-id="@data.Submission?.Id" asp-route-assignId="@data.Id">View</a>
+                                    <a asp-action="SubmissionDetail" asp-controller="Submission" asp-route-id="@data.Id">View</a>
 
                                 </td>
                                 <!--end::Qty-->
@@ -158,6 +155,7 @@
     </div>
     <!--end::Card body-->
 </div>
+
 
 
 <script>

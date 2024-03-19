@@ -9,5 +9,6 @@ namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
     {
         Task<List<GradeParamViewModel>> GetGradeParams();
         Task<RequestResponse> SaveGrade(List<GradeCommand> payload);
+        Task<RequestResponse> UploadReport(UploadCommand payload);
     }
 }

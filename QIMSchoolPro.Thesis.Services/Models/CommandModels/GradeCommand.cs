@@ -19,4 +19,10 @@ namespace QIMSchoolPro.Thesis.Services.Models.CommandModels
         public int AssignmentId { get; set; }
         public List<GradeCommand> Data { get; set; }
     }
+
+    public class UploadCommand
+    {
+        public int ThesisAssignmentId { get; set; }
+        public string Path { get; set; }
+    }
 }

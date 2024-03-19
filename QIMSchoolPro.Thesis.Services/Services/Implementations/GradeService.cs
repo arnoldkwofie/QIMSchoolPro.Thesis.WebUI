@@ -36,6 +36,14 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
+        public async Task<RequestResponse> UploadReport(UploadCommand payload)
+        {
+            var model = await _httpAccessorService
+                .PostRequestAsync(HttpUrlConstant.UploadReport(_baseRoute), new { payload },
+                new CancellationToken());
+            return model;
+        }
+
 
 
     }

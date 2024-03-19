@@ -11,12 +11,17 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
         {
             _submissionService = submissionService;
         }
+
         public async Task<IActionResult> Index()
         {
             var data = await _submissionService.GetDepartmentSubmissions();
             return View(data);
         }
-
+        public async Task<IActionResult> ProcessedReviews()
+        {
+            var data = await _submissionService.DepartmentProcessedReviews();
+            return View(data);
+        }
         public async Task<IActionResult> Approval(int submissionId, int approvalId)
         {
             var data = await _submissionService.Departmentapproval(submissionId, approvalId);

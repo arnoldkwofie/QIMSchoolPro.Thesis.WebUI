@@ -5,6 +5,8 @@ using QIMSchoolPro.Thesis.Services.Models.ViewModels;
 using QIMSchoolPro.Thesis.Services.Services.Interfaces;
 using RestSharp;
 using System.Net;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
 {
@@ -96,6 +98,8 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             if (response.IsSuccessful)
             {
                 return response.Data;
+                
+               
             }
 
             var error = response.ErrorMessage;

@@ -23,4 +23,11 @@ namespace QIMSchoolPro.Thesis.Services.Models.CommandModels
 		public string Abstract { get; set; }
 
 	}
+
+    public class PublishCommand
+    {
+        public int Id { get; set; }
+        
+
+    }
 }
