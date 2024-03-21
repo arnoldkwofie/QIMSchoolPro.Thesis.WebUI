@@ -148,6 +148,11 @@ namespace QIMSchoolPro.Thesis.AdminUI.Controllers
             return View(data);
         }
 
+        public async Task<IActionResult> SubmitToLibrary(int id)
+        {
+            var data = await _submissionService.SubmitToLibrary(id);
+            return Ok(data);
+        }
 
         public async Task<IActionResult> Delete(int id)
         {

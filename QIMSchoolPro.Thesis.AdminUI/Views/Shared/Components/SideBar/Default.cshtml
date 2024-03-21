@@ -274,21 +274,18 @@
 					<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 						<!--begin:Menu link--><span class="menu-link"><span class="menu-icon"><i class="ki-duotone ki-address-book fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i></span><span class="menu-title">System Management</span><span class="menu-arrow"></span></span><!--end:Menu link--><!--begin:Menu sub-->
 						<div class="menu-sub menu-sub-accordion">
-							<!--begin:Menu item-->
-							<div class="menu-item">
-								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/overview.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage Users</span></a><!--end:Menu link-->
-							</div>
+							
 							<!--end:Menu item--><!--begin:Menu item-->
-							<div class="menu-item">
+							@*<div class="menu-item">
 								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/projects.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage Announcements</span></a><!--end:Menu link-->
 							</div>
 							<!--end:Menu item--><!--begin:Menu item-->
 							<div class="menu-item">
 								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/campaigns.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage Events</span></a><!--end:Menu link-->
-							</div>
+							</div>*@
 							<!--end:Menu item--><!--begin:Menu item-->
 							<div class="menu-item">
-								<!--begin:Menu link--><a class="menu-link" href="/metronic8/demo8/pages/user-profile/documents.html"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Schdule Oral Examinantion</span></a><!--end:Menu link-->
+								<!--begin:Menu link--><a class="menu-link" asp-action="Index" asp-controller="OralExamination"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Schdule Oral Examinantion</span></a><!--end:Menu link-->
 							</div>
 							<!--end:Menu item--><!--begin:Menu item-->
 							<div class="menu-item">
@@ -307,19 +304,21 @@
 						<!--begin:Menu link--><a class="menu-link" asp-action="DepartmentReview" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Processed review</span></a><!--end:Menu link-->
 					</div>
 				}
-
+				@if (User.IsInRole(RolesModel.HOD) || User.IsInRole(RolesModel.SPS) || User.IsInRole(RolesModel.TeachingStaff) || User.IsInRole(RolesModel.Students))
+				{
+					<div class="menu-item">
+						<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission" ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Reports</span></a><!--end:Menu link-->
+					</div>
+				}
 				<div class="menu-item">
-					<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission" ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Reports</span></a><!--end:Menu link-->
+					<!--begin:Menu link--><a class="menu-link" asp-action="Index" asp-controller="OralExamination"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Oral Examination</span></a><!--end:Menu link-->
 				</div>
-				<div class="menu-item">
-					<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Oral Examination</span></a><!--end:Menu link-->
-				</div>
-				<div class="menu-item">
+				@*<div class="menu-item">
 					<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Announcement</span></a><!--end:Menu link-->
 				</div>
 				<div class="menu-item">
 					<!--begin:Menu link--><a class="menu-link" asp-action="Reports" asp-controller="Submission"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Upcoming Events</span></a><!--end:Menu link-->
-				</div>
+				</div>*@
 
 				<div class="menu-item">
 					<!--begin:Menu link--><a class="menu-link" asp-action="Login" asp-controller="UserAccount"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Logout</span></a><!--end:Menu link-->

@@ -84,6 +84,13 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
+        public async Task<List<SubmissionViewModel>> GetLibrarySubmissions()
+        {
+            var model = await _httpAccessorService
+                .GetRequestAsync<List<SubmissionViewModel>>(HttpUrlConstant.GetLibrarySubmissions(_baseRoute),
+                new CancellationToken());
+            return model;
+        }
         public async Task<List<SubmissionViewModel>> DepartmentProcessedReviews()
         {
             var model = await _httpAccessorService
@@ -156,7 +163,14 @@ namespace QIMSchoolPro.Thesis.WebUI.Services.Implementations
             return model;
         }
 
-      
+        public async Task<RequestResponse> SubmitToLibrary(int id)
+        {
+            var model = await _httpAccessorService
+                .GetDeptReviewRequestAsync(HttpUrlConstant.SubmitToLibrary(_baseRoute, id),
+                new CancellationToken());
+            return model;
+        }
+
 
         public async Task<RequestResponse> PostSubmission(PostSubmission payload)
         {

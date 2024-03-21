@@ -30,4 +30,11 @@ namespace QIMSchoolPro.Thesis.Services.Models.CommandModels
         
 
     }
+
+    public class ScheduleCommand
+    {
+        public int SubmissionNo { get; set; }
+        public DateTime ExaminationDate { get; set; }
+
+    }
 }

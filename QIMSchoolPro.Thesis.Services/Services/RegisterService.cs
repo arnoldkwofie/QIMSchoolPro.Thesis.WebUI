@@ -48,6 +48,7 @@ namespace QIMSchoolPro.Thesis.Services.Services
             service.AddScoped<IAuthService, AuthService>();
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<IGradeService, GradeService>();
+            service.AddScoped<IOralExaminationService, OralExaminationService>();
 
 
             return service;

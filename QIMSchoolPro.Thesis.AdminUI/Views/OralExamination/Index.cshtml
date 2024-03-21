@@ -1,0 +1,187 @@
+﻿@using QIMSchoolPro.Thesis.Services.Models.Enum;
+@using QIMSchoolPro.Thesis.Services.Models.ViewModels;
+@model IEnumerable<QIMSchoolPro.Thesis.Services.Models.ViewModels.OralExaminationViewModel>
+<div class="card card-flush h-xl-100">
+    <!--begin::Card header-->
+    <div class="card-header pt-7">
+        <!--begin::Title-->
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bold text-gray-900">Schedule Oral Examination</span>
+            @* <span class="text-gray-500 mt-1 fw-semibold fs-6">View All Submissions</span>*@
+        </h3>
+        <!--end::Title-->
+        <!--begin::Actions-->
+        <div class="card-toolbar">
+            <!--begin::Filters-->
+            <div class="d-flex flex-stack flex-wrap gap-4">
+                <!--begin::Destination-->
+                <div class="d-flex align-items-center fw-bold">
+                </div>
+
+            </div>
+            <!--begin::Filters-->
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+ 
+   
+        <div class="card-body" style="height:300px;">
+            @if (User.IsInRole(RolesModel.SPS))
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Submission No#</label>
+                        @if(ViewBag.Id > 0)
+                        {
+                            <input type="number" id="submissionNo" value="@ViewBag.Id" class="form-control" required />
+                        }
+                        else{
+                            <input type="number" id="submissionNo" class="form-control" required />
+                            }
+
+                        </div>
+                        <div class="col-md-4">
+                            <label>Examination Date</label>
+                            <input type="date" id="examinationDate" class="form-control" required />
+                        </div>
+                        <div class="col-md-4">
+                            <br />
+                            <button type="button" id="btnSchedule" class="btn btn-success">Schedule</button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+            }
+
+         <div class="container">
+            <div id="kt_table_widget_5_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered dt-responsive" id="_mysubmissionDatatable" width="100%" cellspacing="0">
+                        <!--begin::Table head-->
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+
+                                <th>Submission #</th>
+                                <th>StudentNumber </th>
+                                <th>Name </th>
+                                <th>Programme </th>
+                                <th>Department </th>
+                                <th>Title</th>
+                                <th>Scheduled Date</th>
+                               
+                            </tr>
+
+                            <!--end::Table row-->
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody class="fw-bold text-gray-600">
+                            @foreach (var data in Model)
+                            {
+                                <tr>
+                                    <!--begin::Item-->
+                                    <td>
+                                        # @data.Submission.Id
+                                    </td>
+                                    <!--end::Item-->
+                                    <!--begin::Product ID-->
+                                    <td>
+                                        @data.Submission.Student.StudentNumber
+                                    </td>
+                                    <td>
+                                        @data.Submission.Student.Party.Name.FirstName @data.Submission.Student.Party.Name.LastName
+                                    </td>
+                                    <td>
+                                        @data.Submission.Student.Programme.Name
+                                    </td>
+                                    <td>
+                                        @data.Submission.Student.Programme.Department.Name
+                                    </td>
+                                    <td>
+                                        @data.Submission.Title
+                                    </td>
+
+
+                                    <td>
+                                        @data.ExaminationDate <br>
+                                    </td>
+
+                                    
+                                    <!--end::Qty-->
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                </div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"></div></div>
+            </div>
+
+            </div>
+        
+    
+    
+</div>
+</div>
+
+
+
+<script>
+    $(function () {
+
+        $('#btnSchedule').click(function () {
+            var submissionNo = $('#submissionNo').val();
+            var examinationDate = $('#examinationDate').val();
+
+
+            $.ajax({
+                url: $('#base_url').text() + '/OralExamination/Schedule',
+                type: 'post',
+                data: {
+                    submissionNo: submissionNo,
+                    examinationDate: examinationDate
+                },
+                success: function (response) {
+
+                    if (response) {
+
+                        if(response.message=="Added Successfully"){
+                            swal({
+                                title: "success",
+                                icon: "success",
+                                text: "Successful",
+                                type: "Examination Scheduled"
+                            });
+                        }else{
+                            showNotificationMessage("Error", response.detailedMessage, "error");
+                        }
+
+                       
+
+                    } else {
+                        var errorMessage = response.message;
+                        if (!errorMessage)
+                            errorMessage = response.detailedMessage;
+
+                        showNotificationMessage("Error", errorMessage, "error");
+                    }
+                },
+                complete: function () {
+
+                },
+                error: errorResponse
+            });
+
+
+        });
+
+
+
+    });
+</script>

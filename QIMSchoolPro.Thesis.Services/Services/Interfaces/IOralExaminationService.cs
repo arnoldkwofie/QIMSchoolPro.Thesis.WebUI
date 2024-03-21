@@ -5,9 +5,10 @@ using QIMSchoolPro.Thesis.Services.Models.ViewModels;
 
 namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
 {
-    public interface IOralExaminationService 
+    public interface IGradeService 
     {
-        Task<RequestResponse> Schedule(ScheduleCommand payload);
-        Task<List<OralExaminationViewModel>> GetAll();
+        Task<List<GradeParamViewModel>> GetGradeParams();
+        Task<RequestResponse> SaveGrade(List<GradeCommand> payload);
+        Task<RequestResponse> UploadReport(UploadCommand payload);
     }
 }

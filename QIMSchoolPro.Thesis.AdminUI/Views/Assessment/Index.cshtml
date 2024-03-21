@@ -77,7 +77,7 @@
                                             <label>General Comment</label>
                                             }
                                             <textarea class="form-control" id="comment_@data.Order"></textarea>
-                                            <input type="hidden" id="gradeParamId_@data.Id" value="@data.Id" />
+                                            <input type="text" id="gradeParamId_@data.Id" value="@data.Id" />
                                     </div>
                                      
                                 </div>
@@ -250,7 +250,7 @@
                         <td>
                             @foreach(var doc in data.Submission?.Documents)
                             {
-                                <a href="/FileUpload/@doc.Versions.LastOrDefault().Path"><i class="fa fa-paperclip" aria-hidden="true"></i>@doc.Name </a> <br />
+                                <a href="/thesis/FileUpload/@doc.Versions.LastOrDefault().Path"><i class="fa fa-paperclip" aria-hidden="true"></i>@doc.Name </a> <br />
                             }
 
                         </td>
@@ -334,6 +334,8 @@
                 var marks = $('#mark_'+ i).val();
                 var gradeParamId = $('#gradeParamId_'+ i).val();
                 var comment = $('#comment_' + i).val()
+                
+                
                 data.push({ AssignmentId: assignmentId, GradeParamId: gradeParamId, Marks: marks, Comment: comment });
             }
 

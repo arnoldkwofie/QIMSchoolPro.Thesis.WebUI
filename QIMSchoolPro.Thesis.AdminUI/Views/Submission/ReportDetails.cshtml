@@ -3,6 +3,38 @@
 @model QIMSchoolPro.Thesis.Services.Models.ViewModels.ReportDetail
 
 
+
+
+<div class="modal fade" id="Add_File" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="frmUpload">
+                <div class="modal-header">
+                    <h5 class="modal-title changeModalName" id="exampleModalLabel">Upload Examiner's Report'</h5>
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="fa fa-times"><span class="path1"></span><span class="path2"></span></i>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <input type="hidden" id="doc_id" value="@Model.Submission?.Documents?.Where(a=>a.Name=="PrimaryFile")?.FirstOrDefault()?.Id" />
+                        <input type="file" id="fileId" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions">
+                            <input type="submit" class="btn btn-primary" value="Upload">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 <div class="row" >
     
     <div class="col-xl-8" >
@@ -13,21 +45,24 @@
             <div class="card-header pt-7">
                 
                 <div class="row">
-                    
+                    <input type="hidden" id="submissionId" value="@Model.Submission.Id" />
                     @if ( User.IsInRole(RolesModel.SPS))
                     {
 
-                        <div class="col-md-4">
-                            <label>Select Action</label>
-                            <select class="form-control form-select"  id="decide">
-                                <option></option>
-                                <option value="1">Pass</option>
-                                <option value="Re-assign">Re-assign</option>
-                                <option value="2">Reject</option>
-                            </select>
-                            <input type="hidden" id="submissionId"  value="@Model.Submission.Id" />
+                        <div class="col-md-3">
+                            @if (!Model.Submission.Publish && Model.Submission.DecisionState==DecisionState.Neutral)
+                            {
+                                <label>Select Action</label>
+                                <select class="form-control form-select"  id="decide">
+                                    <option></option>
+                                    <option value="1">Pass</option>
+                                    <option value="Re-assign">Re-assign</option>
+                                    <option value="2">Reject</option>
+                                </select>
+                               
+                            }
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <br>
                             <button type="button" id="btnApply" hidden class="btn btn-success btn-sm">
                                 Apply
@@ -35,46 +70,82 @@
                         </div>
                         @if (Model.Submission.DecisionState==DecisionState.Approve || Model.Submission.DecisionState==DecisionState.Reject)
                         {
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <br>
                                 <br>
-                                <button type="button" id="btnPublish" class="btn btn-success btn-sm">
-                                    Publish
-                                </button>
+                                @if (Model.Submission.Publish)
+                                {
+                                    <span class="badge badge-light-success fs-8 fw-bold my-2">published</span>
+                                }
+                                else
+                                {
+
+                                    <button type="button" id="btnPublish" class="btn btn-warning btn-sm">
+                                        Publish
+                                    </button>
+                                }
+
                             </div>
                         }
+                        @if (Model.Submission.Publish && Model.Submission.DecisionState == DecisionState.Approve && Model.Submission.Trip > 1)
+                        {
+                            <div class="col-md-3">
+                                <br>
+                                @if (Model.Submission.TransitionState == TransitionState.Library)
+                                {
+                                    <span class="badge badge-light-success fs-8 fw-bold my-2">submitted to library</span>
+                                }
+                                else
+                                {
+                                    <input type="hidden" id="submissionId" value="@Model.Submission.Id" />
+                                    <a href="#" id="btnLibrary">send to library</a>
+                                }
+                                <br>
+                                <br>
+                                <a asp-action="Index" asp-controller="OralExamination" asp-route-id="@Model.Submission.Id">Schedule Oral Examination</a>
+
+                               
+                            </div>
+                        }
+
                       
                     
                     }
                 </div>
-                <div class="row" id="subsec" hidden>
-                    <div class="col-md-3">
-                        <label>Select Examiner</label>
-                        @Html.DropDownList("Id", (IEnumerable<SelectListItem>)ViewBag.StaffLookup, new { @class = "form-control  form-select",  @id="staffId", @style = "width:100%" , data_control = "select2"})
-                    </div>
-
-                    <div class="col-md-3">
-                        <label>Select Examiner Type</label>
-                        <select class="form-control" id="reviewerType">
-                            <option></option>
-                            <option value="1">First Internal Examiner</option>
-                            <option value="2">Second Internal Examiner</option>
-                            <option value="3">External Examiner</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label>Choose Due Date</label>
-                        <input class="form-control" type="date" id="due_date" placeholder="Due date" />
-                    </div>
-
-                    <div class="col-md-3">
-                        <br>
-                        <button type="submit" data-kt-contacts-type="submit" id="assign" class="btn btn-success btn-sm">
-                            Assign
-                        </button>
+              
+                    <div class="row" id="subsec" hidden>
+                        <div class="col-md-3">
+                            <label>Select Examiner</label>
+                            @Html.DropDownList("Id", (IEnumerable<SelectListItem>)ViewBag.StaffLookup, new { @class = "form-control  form-select",  @id="staffId", @style = "width:100%" , data_control = "select2"})
                         </div>
-                </div>
+
+                        <div class="col-md-3">
+                            <label>Select Examiner Type</label>
+                            <select class="form-control" id="reviewerType">
+                                <option></option>
+                                <option value="1">First Internal Examiner</option>
+                                <option value="2">Second Internal Examiner</option>
+                                <option value="3">Third Internal Examiner</option>
+                                <option value="4">Fourth Internal Examiner</option>
+                                <option value="5">First External Examiner</option>
+                                <option value="6">Second External Examiner</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Choose Due Date</label>
+                            <input class="form-control" type="date" id="due_date" placeholder="Due date" />
+                        </div>
+
+                        <div class="col-md-3">
+                            <br>
+                            <button type="submit" data-kt-contacts-type="submit" id="assign" class="btn btn-success btn-sm">
+                                Assign
+                            </button>
+                        </div>
+                    </div>
+                
+              
             </div>
 
           @*  <h3 class="card-title">
@@ -135,13 +206,7 @@
                                     <div class="col-md-4">
                                         @item.Staff.Party.Name.FirstName @item.Staff.Party.Name.LastName
                                     </div>
-                                    @if (@item.ExaminerReports.Count > 0)
-                                    {
-                                        <div class="col-md-4">
-                                            <a href="/Report/@item.ExaminerReports.First().Path">Report</a>
-
-                                        </div>
-                                    }
+                                    
 
                                 </div>
 
@@ -150,6 +215,12 @@
 
                             <div id="kt_job_@item.Id" class="fs-6 ms-1 collapse" style="">
                                 <div class="container">
+                                    @if (@item.ExaminerReports.Count > 0)
+                                    {
+                                        
+                                            <a href="/thesis/Report/@item.ExaminerReports.First().Path">Download Examiners Report</a>
+                                                <br />
+                                    }
                                     <table class="table table-striped table-bordered dt-responsive " width="100%" cellspacing="0">
                                         <tbody>
                                             @foreach (var grade in item.Grades)
@@ -214,13 +285,22 @@
 
 
                                     <li>
-                                        <span><i class="icon-folder-open"></i> @document.Name</span>
+                                        @if(document.Name=="PrimaryFile" && Model.Submission.DecisionState == DecisionState.Approve)
+                                        {
+                                            <span><i class="icon-folder-open"></i> @document.Name </span> <a href="#" data-bs-toggle="modal" data-bs-target="#Add_File">Upload Revised File</a>
+                                        }
+                                        else
+                                        {
+                                            <span><i class="icon-folder-open"></i> @document.Name</span>
+                                        }
+                                        
+                                        
                                         <ul>
                                             @if (document.Versions != null)
                                             {
 
                                                 <li>
-                                                    <a href="/FileUpload/@document.Versions.LastOrDefault().Path"> <span><img src="/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @document.Versions.LastOrDefault().Name</span></a>
+                                                    <a href="/thesis/FileUpload/@document.Versions.LastOrDefault().Path"> <span><img src="/thesis/assets/media/svg/files/pdf.svg" class="theme-light-show symbol symbol-60px mb-5" alt=""> @document.Versions.LastOrDefault().Name</span></a>
 
                                                 </li>
 
@@ -424,12 +504,36 @@
 
 <script>
     $(function () {
+
+
+            $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+            $('.tree li.parent_li > span').on('click', function (e) {
+                var children = $(this).parent('li.parent_li').find(' > ul > li');
+                if (children.is(":visible")) {
+                    children.hide('fast');
+                    $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+                } else {
+                    children.show('fast');
+                    $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+                }
+                e.stopPropagation();
+            });
+
+
+
+
+
+
+
+
+
         $('#decide').change(function () {
 
             var value = $('#decide').val();
             if(value==="1" || value==="2")
             {
               $('#btnApply').removeAttr('hidden');
+                $('#subsec').attr('hidden', true);
             }
            
             if (value === "Re-assign") {
@@ -481,6 +585,47 @@
 
         });
 
+        $('#btnLibrary').click(function () {
+            var id = $('#submissionId').val();
+            
+
+
+            $.ajax({
+                url: $('#base_url').text() + '/Submission/SubmitToLibrary',
+                type: 'post',
+                data: {
+                    id: id
+                    
+                },
+                success: function (response) {
+
+                    if (response) {
+
+                        swal({
+                            title: "success",
+                            icon: "success",
+                            text: "Successful",
+                            type: "Sent to Library"
+                        }).then(function () {
+                            window.location.reload();
+                        });
+
+                    } else {
+                        var errorMessage = response.message;
+                        if (!errorMessage)
+                            errorMessage = response.detailedMessage;
+
+                        showNotificationMessage("Error", errorMessage, "error");
+                    }
+                },
+                complete: function () {
+
+                },
+                error: errorResponse
+            });
+
+
+        });
 
 
         $('#btnApply').click(function () {

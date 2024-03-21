@@ -7,6 +7,8 @@ namespace QIMSchoolPro.Thesis.Services.Services.Interfaces
 {
     public interface ISubmissionService 
     {
+        Task<RequestResponse> SubmitToLibrary(int id);
+        Task<List<SubmissionViewModel>> GetLibrarySubmissions();
         Task<RequestResponse> Create(SubmissionCommand payload);
         Task<RequestResponse> Publish(PublishCommand payload);
         Task<RequestResponse> Decide(DecisionCommand payload);

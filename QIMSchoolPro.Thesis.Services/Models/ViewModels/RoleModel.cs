@@ -12,6 +12,7 @@ namespace QIMSchoolPro.Thesis.Services.Models.ViewModels
             public static string Students => "Students";
             public static string HOD => "HOD";
             public static string SPS => "SPS";
+            public static string Library => "Library";
             public static string TeachingStaff => "TeachingStaff";
             public static string Developers => "Developers";
             public static string SystemAdmin => "SystemAdmin";

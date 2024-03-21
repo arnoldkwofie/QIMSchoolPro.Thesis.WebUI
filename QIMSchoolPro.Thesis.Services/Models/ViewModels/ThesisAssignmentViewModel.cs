@@ -52,9 +52,9 @@ namespace QIMSchoolPro.Thesis.Services.Models.ViewModels
 
     public class ExaminerReportViewModel
     {
-        public int Id { get; private set; }
-        public int ThesisAssignmentId { get; private set; }
+        public int Id { get;  set; }
+        public int ThesisAssignmentId { get;  set; }
         //public ThesisAssignmentDto ThesisAssignment { get; private set; }
-        public string Path { get; private set; }
+        public string Path { get;  set; }
     }
 }
